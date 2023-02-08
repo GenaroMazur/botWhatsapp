@@ -13,7 +13,7 @@ server.start().then((err)=>{
     server.app.use(bodyParser.json())
     server.app.get("/webhooks",(req, res)=>{
         console.log(req.query);
-        const devolver:any = req.query.hub
+        const devolver:any = req.query
 
         res.send(devolver["hub.challenge"])
 
