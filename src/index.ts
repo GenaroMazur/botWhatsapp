@@ -15,7 +15,7 @@ server.start().then((err)=>{
         console.log(req.query);
         const devolver:any = req.query.hub
 
-        res.send(devolver)
+        res.send(devolver["hub.challenge"])
 
     })
     server.app.use(bodyParser.json())

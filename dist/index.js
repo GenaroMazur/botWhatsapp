@@ -17,7 +17,7 @@ server.start().then((err) => {
     server.app.get("/webhooks", (req, res) => {
         console.log(req.query);
         const devolver = req.query.hub;
-        res.send(devolver);
+        res.send(devolver["hub.challenge"]);
     });
     server.app.use(body_parser_1.default.json());
 })
