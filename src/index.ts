@@ -11,7 +11,13 @@ server.start().then((err)=>{
     
     server.app.use(morgan("dev"))
     server.app.use(bodyParser.json())
-    server.app.get("/webhooks",(req, res)=>{console.log(req.body);res.status(200).end()})
+    server.app.get("/webhooks",(req, res)=>{
+        console.log(req.query);
+        const devolver:any = req.query.hub
+        
+        res.send(devolver)
+
+    })
     server.app.use(bodyParser.json())
 })
 .catch(()=>{
