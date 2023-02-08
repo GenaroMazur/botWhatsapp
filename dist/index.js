@@ -14,7 +14,11 @@ server.start().then((err) => {
         throw new Error("error al iniciar servidor") && console.log(err);
     server.app.use((0, morgan_1.default)("dev"));
     server.app.use(body_parser_1.default.json());
-    server.app.get("/webhooks", (req, res) => { console.log(req.body); res.status(200).end(); });
+    server.app.get("/webhooks", (req, res) => {
+        console.log(req.query);
+        const devolver = req.query.hub;
+        res.send(devolver);
+    });
     server.app.use(body_parser_1.default.json());
 })
     .catch(() => {

@@ -14,7 +14,7 @@ server.start().then((err)=>{
     server.app.get("/webhooks",(req, res)=>{
         console.log(req.query);
         const devolver:any = req.query.hub
-        
+
         res.send(devolver)
 
     })
