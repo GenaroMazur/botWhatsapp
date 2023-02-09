@@ -24,11 +24,8 @@ server.start().then((err) => {
         console.log(req.body);
         let body = {
             "messaging_product": "whatsapp",
-            "to": "3764560397",
-            "type": "template",
-            "text": {
-                "body": "Hola genaro"
-            }
+            "to": "53764560397",
+            "text": { "body": "Hola genaro" }
         };
         body = JSON.stringify(body);
         (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages", {
@@ -37,7 +34,8 @@ server.start().then((err) => {
                 authorization: "Bearer EAAIFmZAUGCsYBAFRDse3kHsaDtTpSznzjdA11ZAOYZAdLXnu6gIBdfG032PHIfF5J4EGp1KpWb4ml13IuqgdPojY2ZCkQFS3UvpwHPK1JXWS5oe5KdiPc8WGFPLAqHsJJAL7wPNfrCqviqzZAdxNU7VQ6yinw7B3PSih2DxnJ2xXveETZCPgq1vJUUO6C5l4gPTsi16AL9ZAQZDZD",
             },
             body
-        });
+        }).then(a => console.log(a));
+        console.log(body);
         res.status(200).end();
     });
     server.app.use(body_parser_1.default.json());

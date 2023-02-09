@@ -21,11 +21,8 @@ server.start().then((err) => {
         console.log(req.body);
         let body:any ={
             "messaging_product": "whatsapp",
-            "to": "3764560397",
-            "type": "template",
-            "text":{
-                "body":"Hola genaro"
-            }
+            "to": "53764560397",
+            "text":{"body":"Hola genaro"}
         }
         body = JSON.stringify(body)
         fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
@@ -35,7 +32,9 @@ server.start().then((err) => {
                 
             },
             body
-        })
+        }).then(a=>console.log(a))
+        console.log(body);
+        
         res.status(200).end()
     })
     server.app.use(bodyParser.json())
