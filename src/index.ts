@@ -28,8 +28,8 @@ server.start().then((err) => {
         fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
             method:"POST",
             headers:{
-                authorization:"Bearer EAAIFmZAUGCsYBAFRDse3kHsaDtTpSznzjdA11ZAOYZAdLXnu6gIBdfG032PHIfF5J4EGp1KpWb4ml13IuqgdPojY2ZCkQFS3UvpwHPK1JXWS5oe5KdiPc8WGFPLAqHsJJAL7wPNfrCqviqzZAdxNU7VQ6yinw7B3PSih2DxnJ2xXveETZCPgq1vJUUO6C5l4gPTsi16AL9ZAQZDZD",
-                
+                authorization:"Bearer EAAIFmZAUGCsYBABRYTNgb8VT7WtD7ZBCIRDLL8CC6ZCsLzOmjPRG4C7P8zhcHMFZCskqoRCgQQiOnnvT3fUvuddOZAVXk7WgHZB1Y7aqrg9cfwJLg3QTpaZAwP14zM7tzyguB0qlytVofSd3d3aZCGLYPmvFErMC0352LPMWZAqlxgZAZAFi0vfGd7C81KWLhmZC29ZBYZBvRsZB4FNEQZDZD",
+                "Content-Type": "application/json"
             },
             body
         }).then(a=>console.log(a))
