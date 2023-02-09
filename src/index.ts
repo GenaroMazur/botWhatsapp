@@ -18,13 +18,13 @@ server.start().then((err) => {
 
     })
     server.app.post("/webhooks", (req, res) => {
-        console.log(JSON.stringify(req.body));
+        console.log(JSON.stringify(req.body.entry[0].changes[0]));
         let body:any ={
             "messaging_product": "whatsapp",
             "to": "543764560397",
             "text":{"body":"Hola genaro"}
         }
-        body = JSON.stringify(req.body.entry[0].changes)
+        body = JSON.stringify(body)
         const token = process.env.TOKEN || ""
         
         fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
