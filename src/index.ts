@@ -18,7 +18,7 @@ server.start().then((err) => {
 
     })
     server.app.post("/webhooks", (req, res) => {
-        console.log(req.body.entry[0].changes);
+        console.log(JSON.stringify(req.body));
         let body:any ={
             "messaging_product": "whatsapp",
             "to": "543764560397",
@@ -26,7 +26,6 @@ server.start().then((err) => {
         }
         body = JSON.stringify(body)
         const token = process.env.TOKEN || ""
-        console.log(token);
         
         fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
             method:"POST",
