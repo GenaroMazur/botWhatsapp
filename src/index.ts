@@ -19,6 +19,8 @@ server.start().then((err) => {
     })
     server.app.post("/webhooks", (req, res) => {
         console.log(JSON.stringify(req.body.entry[0].changes[0]));
+        console.log("_----------------------------------------------------------");
+        
         let body:any ={
             "messaging_product": "whatsapp",
             "to": "543764560397",
