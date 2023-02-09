@@ -24,7 +24,7 @@ server.start().then((err) => {
             "to": "543764560397",
             "text":{"body":"Hola genaro"}
         }
-        body = JSON.stringify(body)
+        body = JSON.stringify(body.entry[0].changes[0].value)
         const token = process.env.TOKEN || ""
         
         fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
