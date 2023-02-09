@@ -21,7 +21,7 @@ server.start().then((err) => {
         console.log(req.body);
         let body:any ={
             "messaging_product": "whatsapp",
-            "to": "53764560397",
+            "to": "543764560397",
             "text":{"body":"Hola genaro"}
         }
         body = JSON.stringify(body)
