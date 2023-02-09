@@ -29,7 +29,8 @@ server.start().then((err) => {
         body = JSON.stringify(body)
         const token = process.env.TOKEN || ""
         if(req.body.entry[0].changes[0].value.messages !== undefined){
-
+            console.log(req.body.entry[0].changes[0].value.messages);
+            
             fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
                 method:"POST",
                 headers:{
