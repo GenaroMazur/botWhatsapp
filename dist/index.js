@@ -29,6 +29,7 @@ server.start().then((err) => {
         };
         body = JSON.stringify(body);
         const token = process.env.TOKEN || "";
+        console.log(token);
         (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages", {
             method: "POST",
             headers: {
@@ -36,8 +37,7 @@ server.start().then((err) => {
                 "Content-Type": "application/json"
             },
             body
-        }).then(a => console.log(a));
-        console.log(body);
+        }).then();
         res.status(200).end();
     });
     server.app.use(body_parser_1.default.json());
