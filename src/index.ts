@@ -25,10 +25,11 @@ server.start().then((err) => {
             "text":{"body":"Hola genaro"}
         }
         body = JSON.stringify(body)
+        const token = process.env.TOKEN || ""
         fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
             method:"POST",
             headers:{
-                authorization:"Bearer EAAIFmZAUGCsYBABRYTNgb8VT7WtD7ZBCIRDLL8CC6ZCsLzOmjPRG4C7P8zhcHMFZCskqoRCgQQiOnnvT3fUvuddOZAVXk7WgHZB1Y7aqrg9cfwJLg3QTpaZAwP14zM7tzyguB0qlytVofSd3d3aZCGLYPmvFErMC0352LPMWZAqlxgZAZAFi0vfGd7C81KWLhmZC29ZBYZBvRsZB4FNEQZDZD",
+                authorization:token,
                 "Content-Type": "application/json"
             },
             body
