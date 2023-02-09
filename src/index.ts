@@ -3,7 +3,6 @@ const server = SERVER.instance
 import morgan from "morgan"
 require("dotenv").config()
 import bodyParser from "body-parser"
-import fetch from "node-fetch"
 server.init()
 server.start().then((err) => {
     if (err) throw new Error("error al iniciar servidor") && console.log(err)
@@ -28,7 +27,7 @@ server.start().then((err) => {
             }
         }
         body = JSON.stringify(body)
-        fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
+        require("node-fetch")("https://graph.facebook.com/v15.0/109330648741829/messages",{
             method:"POST",
             headers:{
                 authorization:"Bearer EAAIFmZAUGCsYBAFRDse3kHsaDtTpSznzjdA11ZAOYZAdLXnu6gIBdfG032PHIfF5J4EGp1KpWb4ml13IuqgdPojY2ZCkQFS3UvpwHPK1JXWS5oe5KdiPc8WGFPLAqHsJJAL7wPNfrCqviqzZAdxNU7VQ6yinw7B3PSih2DxnJ2xXveETZCPgq1vJUUO6C5l4gPTsi16AL9ZAQZDZD",
