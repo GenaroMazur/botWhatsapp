@@ -28,15 +28,17 @@ server.start().then((err) => {
         }
         body = JSON.stringify(body)
         const token = process.env.TOKEN || ""
-        
-        fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
-            method:"POST",
-            headers:{
-                authorization:token,
-                "Content-Type": "application/json"
-            },
-            body
-        }).then()
+        if(req.body.entry[0].changes[0].value.messages !== undefined){
+
+            fetch("https://graph.facebook.com/v15.0/109330648741829/messages",{
+                method:"POST",
+                headers:{
+                    authorization:token,
+                    "Content-Type": "application/json"
+                },
+                body
+            })
+        }
         
         res.status(200).end()
     })
