@@ -18,7 +18,7 @@ server.start().then((err) => {
 
     })
     server.app.post("/webhooks", (req, res) => {
-        console.log(req.body);
+        console.log(req.body.entry);
         let body:any ={
             "messaging_product": "whatsapp",
             "to": "543764560397",
