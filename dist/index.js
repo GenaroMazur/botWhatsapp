@@ -21,23 +21,27 @@ server.start().then((err) => {
         res.send(devolver["hub.challenge"]);
     });
     server.app.post("/webhooks", (req, res) => {
-        console.log(req.body);
+        console.log(JSON.stringify(req.body.entry[0].changes[0]));
+        console.log("_----------------------------------------------------------");
+        const texto = "Para obtener un turno para tramitar el BEEG debe enviar los siguientes datos:\n1) Nombre y apellido.\n2) DNI\n3) Lugar de preferencia para realizar el trámite: Posadas Plaza Shopping o Terminal UNaM.\n4) Horario aprox. disponible\n\n*Posadas Plaza Shopping*: De Lunes a Sábados de 9:00hs a 21:00hs.\n\n*Terminal UNaM*: De Lunes a Viernes de 08:30hs a 13:00hs / 14:00hs a 17:30hs. Sábados de 08:00hs a 12:00hs.";
         let body = {
             "messaging_product": "whatsapp",
-            "to": "53764560397",
-            "text": { "body": "Hola genaro" }
+            "to": "543764560397",
+            "text": { "body": `${texto}` }
         };
         body = JSON.stringify(body);
         const token = process.env.TOKEN || "";
-        console.log(token);
-        (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages", {
-            method: "POST",
-            headers: {
-                authorization: token,
-                "Content-Type": "application/json"
-            },
-            body
-        }).then();
+        if (req.body.entry[0].changes[0].value.messages !== undefined) {
+            console.log(req.body.entry[0].changes[0].value.messages);
+            (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages", {
+                method: "POST",
+                headers: {
+                    authorization: token,
+                    "Content-Type": "application/json"
+                },
+                body
+            });
+        }
         res.status(200).end();
     });
     server.app.use(body_parser_1.default.json());
