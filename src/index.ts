@@ -27,18 +27,31 @@ server.start().then((err) => {
         let body: any = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
-            "components":{
+            "text":{
                     "type":"body",
                     "parameters":[
                         {
                             "type":"text",
-                            "text":`${header+texto+footer}`
+                            "text":`111${header+texto+footer}`
                         }
                     ]
                 }
         }
-
+        let body2 : any = {
+            "messaging_product": "whatsapp",
+            "to": "543764560397",
+            "text":{
+                    "type":"body",
+                    "text":[
+                        {
+                            "type":"text",
+                            "text":`222${header+texto+footer}`
+                        }
+                    ]
+                }
+        }
         body = JSON.stringify(body)
+        body2 = JSON.stringify(body2)
         const token = process.env.TOKEN || ""
         if (req.body.entry[0].changes[0].value.messages !== undefined) {
             console.log(req.body.entry[0].changes[0].value.messages);
@@ -50,6 +63,14 @@ server.start().then((err) => {
                     "Content-Type": "application/json"
                 },
                 body
+            })
+            fetch("https://graph.facebook.com/v15.0/109330648741829/messages", {
+                method: "POST",
+                headers: {
+                    authorization: token,
+                    "Content-Type": "application/json"
+                },
+                body2
             })
         }
 
