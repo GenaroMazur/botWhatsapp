@@ -8,7 +8,8 @@ export const indexRouter =async (message:whastappObjectResponse):Promise<void> =
         console.error(message.errors)
         return
     }
-    console.log(message.statuses.status);
+    console.log(message.statuses);
+    console.log(message.messages.contacts[0].profile);
     
     return
 }
