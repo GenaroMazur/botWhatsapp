@@ -34,56 +34,25 @@ server.start().then((err) => {
                 "body": `${header + texto + footer}`
             }
         };
-        let body3 = {
-            "messaging_product": "whatsapp",
-            "recipient_type": "individual",
-            "to": "543764560397",
-            "type": "interactive",
-            "interactive": {
-                "type": "button",
-                "body": { "text": `hola` },
-                "action": {
-                    "buttons": [
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "1",
-                                "title": "a"
-                            }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "2",
-                                "title": "b"
-                            }
-                        }
-                    ]
-                }
-            }
-        };
         let body2 = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
             "type": "interactive",
             "interactive": {
-                "type": "button",
+                "type": "list",
                 "body": { "text": `hola` },
                 "action": {
-                    "buttons": [
+                    "button": "a",
+                    "sections": [
                         {
-                            "type": "reply",
-                            "reply": {
-                                "id": "1",
-                                "title": "a"
-                            }
-                        },
-                        {
-                            "type": "reply",
-                            "reply": {
-                                "id": "2",
-                                "title": "b"
-                            }
+                            "title": "lista 1",
+                            "rows": [
+                                {
+                                    "id": "1",
+                                    "title": "a",
+                                    "description": "desc",
+                                }
+                            ]
                         }
                     ]
                 }
@@ -94,14 +63,6 @@ server.start().then((err) => {
         const token = process.env.TOKEN || "";
         if (req.body.entry[0].changes[0].value.messages !== undefined) {
             console.log(req.body.entry[0].changes[0].value.messages);
-            (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages", {
-                method: "POST",
-                headers: {
-                    authorization: token,
-                    "Content-Type": "application/json"
-                },
-                body: body3
-            }).then(response => console.log(response));
             (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages", {
                 method: "POST",
                 headers: {
