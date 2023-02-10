@@ -27,14 +27,18 @@ server.start().then((err) => {
         let body: any = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
-            "text":`${header + texto + footer}`,
-            "type":"body"
+            "type":"text",
+            "text":{
+                "body":`${header + texto + footer}`
+            }
         }
         let body2: any = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
-            "text":`hola`,
-            "type":"button"
+            "type":"button",
+            "text":{
+                "body":`hola`
+            }
             }
         
         body = JSON.stringify(body)
