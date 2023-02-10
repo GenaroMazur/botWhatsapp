@@ -73,7 +73,7 @@ server.start().then((err) => {
             "type": "interactive",
             "interactive": {
                 "type": "list",
-                "body": `hola`
+                "body": {"text":`hola`}
             }
         }
 
