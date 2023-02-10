@@ -74,7 +74,10 @@ server.start().then((err) => {
             "to": "543764560397",
             "type": "text",
             "text": {
-                "header": { "text": "header" },
+                "header": {
+                    "type": "text",
+                    "text": "header"
+                },
                 "body": { "text": `hola` }
             }
         };
