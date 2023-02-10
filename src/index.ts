@@ -29,14 +29,16 @@ server.start().then((err) => {
             "to": "543764560397",
             "type":"text",
             "text":{
-                "body":`${header + texto + footer}`
+                "header":`${header}`,
+                "body":`${texto + footer}`
             }
         }
         let body2: any = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
-            "type":"button",
-            "text":{
+            "type":"interactive",
+            "interactive":{
+                "type":"list",
                 "body":`hola`
             }
             }
