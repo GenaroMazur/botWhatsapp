@@ -27,28 +27,24 @@ server.start().then((err) => {
         let body: any = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
-            "text":{
-                    "type":"body",
-                    "parameters":[
-                        {
-                            "type":"text",
-                            "text":`111${header+texto+footer}`
-                        }
-                    ]
-                }
+            "text":
+            {
+                "type": "text",
+                "text": `111${header + texto + footer}`
+            }
+
         }
-        let body2 : any = {
+        let body2: any = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
-            "text":{
-                    "type":"body",
-                    "text":[
-                        {
-                            "type":"text",
-                            "text":`222${header+texto+footer}`
-                        }
-                    ]
+            "text": {
+                "type": "body",
+                "text":
+                {
+                    "type": "text",
+                    "text": `222${header + texto + footer}`
                 }
+            }
         }
         body = JSON.stringify(body)
         body2 = JSON.stringify(body2)
@@ -63,15 +59,15 @@ server.start().then((err) => {
                     "Content-Type": "application/json"
                 },
                 body
-            }).then(response=>console.log(response))
+            }).then(response => console.log(response))
             fetch("https://graph.facebook.com/v15.0/109330648741829/messages", {
                 method: "POST",
                 headers: {
                     authorization: token,
                     "Content-Type": "application/json"
                 },
-                body:body2
-            }).then(response=>console.log(response))
+                body: body2
+            }).then(response => console.log(response))
         }
 
         res.status(200).end()
