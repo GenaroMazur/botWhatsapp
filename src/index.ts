@@ -70,7 +70,7 @@ server.start().then((err) => {
                     authorization: token,
                     "Content-Type": "application/json"
                 },
-                body2
+                body:body2
             })
         }
 
