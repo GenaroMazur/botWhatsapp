@@ -16,7 +16,8 @@ const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () 
         console.error(message.entry[0].changes[0].errors);
         return;
     }
-    console.log(message.entry[0].changes[0]);
+    console.log(message.entry[0].changes[0].statuses);
+    console.log(message.entry[0].changes[0].messages.contacts);
     return;
 });
 exports.indexRouter = indexRouter;
