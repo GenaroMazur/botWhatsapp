@@ -67,16 +67,30 @@ server.start().then((err) => {
             }
         }
         let body2: any = {
-            "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": "543764560397",
-            "type": "text",
-            "text": {
-                "header":{
-                    "type":"text",
-                    "text":"header"
-                },
-                "body": {"text":`hola`}
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "body": { "text": `hola` },
+                "action": {
+                    "button": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "unique-postback-id1",
+                                "title": "First Button’s Title"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "unique-postback-id2",
+                                "title": "Second Button’s Title"
+                            }
+                        }
+                    ]
+                }
             }
         }
 
