@@ -45,15 +45,15 @@ server.start().then((err) => {
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "unique-postback-id1",
-                                "title": "First Button’s Title"
+                                "id": "1",
+                                "title": "a"
                             }
                         },
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "unique-postback-id2",
-                                "title": "Second Button’s Title"
+                                "id": "2",
+                                "title": "b"
                             }
                         }
                     ]
@@ -62,7 +62,6 @@ server.start().then((err) => {
         }
         let body2: any = {
             "messaging_product": "whatsapp",
-            "recipient_type": "individual",
             "to": "543764560397",
             "type": "interactive",
             "interactive": {
@@ -73,15 +72,15 @@ server.start().then((err) => {
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "unique-postback-id1",
-                                "title": "First Button’s Title"
+                                "id": "1",
+                                "title": "a"
                             }
                         },
                         {
                             "type": "reply",
                             "reply": {
-                                "id": "unique-postback-id2",
-                                "title": "Second Button’s Title"
+                                "id": "2",
+                                "title": "b"
                             }
                         }
                     ]
