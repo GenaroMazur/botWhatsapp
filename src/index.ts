@@ -63,7 +63,7 @@ server.start().then((err) => {
                     "Content-Type": "application/json"
                 },
                 body
-            })
+            }).then(response=>console.log(response))
             fetch("https://graph.facebook.com/v15.0/109330648741829/messages", {
                 method: "POST",
                 headers: {
@@ -71,7 +71,7 @@ server.start().then((err) => {
                     "Content-Type": "application/json"
                 },
                 body:body2
-            })
+            }).then(response=>console.log(response))
         }
 
         res.status(200).end()
