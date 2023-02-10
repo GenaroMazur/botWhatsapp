@@ -17,10 +17,10 @@ const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () 
         console.error(message.entry[0].changes[0].errors);
         return;
     }
-    console.log(message.entry[0].changes[0].statuses);
-    console.log((_a = message.entry[0].changes[0].messages) === null || _a === void 0 ? void 0 : _a.contacts);
-    console.log(message.entry[0].changes[0].errors);
-    console.log(message.entry[0].changes[0]);
+    console.log(message.entry[0].changes[0].value.messages);
+    console.log(message.entry[0].changes[0].value.statuses);
+    console.log(message.entry[0].changes[0].value.errors);
+    console.log((_a = message.entry[0].changes[0].value.messages) === null || _a === void 0 ? void 0 : _a.contacts);
     return;
 });
 exports.indexRouter = indexRouter;
