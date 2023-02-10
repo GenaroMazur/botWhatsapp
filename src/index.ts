@@ -46,8 +46,8 @@ server.start().then((err) => {
                             "title": "your-section-title-content",
                             "rows": [
                                 {
-                                    "id": "unique-row-identifier",
-                                    "title": "row-title-content",
+                                    "id": "unique-row-identifierb",
+                                    "title": "row-title-content2",
                                     "description": "row-description-content",
                                 }
                             ]
@@ -56,8 +56,8 @@ server.start().then((err) => {
                             "title": "your-section-title-content",
                             "rows": [
                                 {
-                                    "id": "unique-row-identifier",
-                                    "title": "row-title-content",
+                                    "id": "unique-row-identifiera",
+                                    "title": "row-title-content3",
                                     "description": "row-description-content",
                                 }
                             ]
@@ -70,9 +70,9 @@ server.start().then((err) => {
             "messaging_product": "whatsapp",
             "recipient_type": "individual",
             "to": "543764560397",
-            "type": "interactive",
-            "interactive": {
-                "type": "list",
+            "type": "text",
+            "text": {
+                "header":{"text":"header"},
                 "body": {"text":`hola`}
             }
         }
