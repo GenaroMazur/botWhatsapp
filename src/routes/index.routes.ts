@@ -3,9 +3,9 @@ import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { sendToNum } from "../service/sendMessajeToNum";
 
 export const indexRouter =async (message:whastappObjectResponse):Promise<void> => {
-    if(message.entry[0].changes[0].errors !== undefined){
+    if(message.entry[0].changes[0].value.errors !== undefined){
         console.log("¡ SUCEDIO UN PROBLEMA !");
-        console.error(message.entry[0].changes[0].errors)
+        console.error(message.entry[0].changes[0].value.errors)
         return
     }
     

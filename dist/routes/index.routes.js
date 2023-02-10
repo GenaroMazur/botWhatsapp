@@ -12,9 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.indexRouter = void 0;
 const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    if (message.entry[0].changes[0].errors !== undefined) {
+    if (message.entry[0].changes[0].value.errors !== undefined) {
         console.log("¡ SUCEDIO UN PROBLEMA !");
-        console.error(message.entry[0].changes[0].errors);
+        console.error(message.entry[0].changes[0].value.errors);
         return;
     }
     console.log(message.entry[0].changes[0].value.messages);
