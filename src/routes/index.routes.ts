@@ -28,8 +28,9 @@ export const indexRouter = async (message: whastappObjectResponse): Promise<void
     
     console.log(1,message.entry[0].changes[0].value);
     console.log(2,message.entry[0].changes[0].value.messages);
-    console.log(3,message.entry[0].changes[0].value.errors);
-    console.log(4,message.entry[0].changes[0].value.messages[0]);
+    console.log(4,message.entry[0].changes[0].value.messages[0].id);
+    console.log(5,message.entry[0].id);
+    
     
     console.log("________________________________________________________");
     return
