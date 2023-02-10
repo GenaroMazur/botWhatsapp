@@ -11,16 +11,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.indexRouter = void 0;
 const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
     if (message.entry[0].changes[0].value.errors !== undefined) {
         console.log("¡ SUCEDIO UN PROBLEMA !");
         console.error(message.entry[0].changes[0].value.errors);
         return;
     }
     console.log(message.entry[0].changes[0].value.messages);
-    console.log(message.entry[0].changes[0].value.statuses);
+    console.log(message.entry[0].changes[0].value);
     console.log(message.entry[0].changes[0].value.errors);
-    console.log((_a = message.entry[0].changes[0].value.messages) === null || _a === void 0 ? void 0 : _a.contacts);
+    console.log(message.entry[0].changes[0].value.contacts);
     return;
 });
 exports.indexRouter = indexRouter;

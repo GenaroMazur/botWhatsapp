@@ -9,6 +9,7 @@ export interface whastappObjectResponse {
                     "display_phone_number": string,
                     "phone_number_id": string
                 },
+                contacts:contactInterface
                 messages:messagesInResponseInterface,
                 statuses:statusesInterface,
                 errors?:errorInterface
