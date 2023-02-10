@@ -27,22 +27,56 @@ server.start().then((err) => {
         let body: any = {
             "messaging_product": "whatsapp",
             "to": "543764560397",
-            "type":"text",
-            "text":{
-                "header":`${header}`,
-                "body":`${texto + footer}`
+            "type": "text",
+            "text": {
+                "body": `${header + texto + footer}`
+            }
+        }
+        let body3: any = {
+            "messaging_product": "whatsapp",
+            "to": "543764560397",
+            "type": "interactive",
+            "interactive": {
+                "type": "list",
+                "body": { "text": "hello world" },
+                "action": {
+                    "button": "cta-button-content",
+                    "sections": [
+                        {
+                            "title": "your-section-title-content",
+                            "rows": [
+                                {
+                                    "id": "unique-row-identifier",
+                                    "title": "row-title-content",
+                                    "description": "row-description-content",
+                                }
+                            ]
+                        },
+                        {
+                            "title": "your-section-title-content",
+                            "rows": [
+                                {
+                                    "id": "unique-row-identifier",
+                                    "title": "row-title-content",
+                                    "description": "row-description-content",
+                                }
+                            ]
+                        }
+                    ]
+                }
             }
         }
         let body2: any = {
             "messaging_product": "whatsapp",
+            "recipient_type": "individual",
             "to": "543764560397",
-            "type":"interactive",
-            "interactive":{
-                "type":"list",
-                "body":`hola`
+            "type": "interactive",
+            "interactive": {
+                "type": "list",
+                "body": `hola`
             }
-            }
-        
+        }
+
         body = JSON.stringify(body)
         body2 = JSON.stringify(body2)
         const token = process.env.TOKEN || ""
@@ -55,7 +89,7 @@ server.start().then((err) => {
                     authorization: token,
                     "Content-Type": "application/json"
                 },
-                body
+                body: body3
             }).then(response => console.log(response))
             fetch("https://graph.facebook.com/v15.0/109330648741829/messages", {
                 method: "POST",
