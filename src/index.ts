@@ -34,39 +34,6 @@ server.start().then((err) => {
         }
         let body3: any = {
             "messaging_product": "whatsapp",
-            "to": "543764560397",
-            "type": "interactive",
-            "interactive": {
-                "type": "list",
-                "body": { "text": "hello world" },
-                "action": {
-                    "button": "cta-button-content",
-                    "sections": [
-                        {
-                            "title": "your-section-title-content",
-                            "rows": [
-                                {
-                                    "id": "unique-row-identifierb",
-                                    "title": "row-title-content2",
-                                    "description": "row-description-content",
-                                }
-                            ]
-                        },
-                        {
-                            "title": "your-section-title-content",
-                            "rows": [
-                                {
-                                    "id": "unique-row-identifiera",
-                                    "title": "row-title-content3",
-                                    "description": "row-description-content",
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        }
-        let body2: any = {
             "recipient_type": "individual",
             "to": "543764560397",
             "type": "interactive",
@@ -74,7 +41,35 @@ server.start().then((err) => {
                 "type": "button",
                 "body": { "text": `hola` },
                 "action": {
-                    "button": [
+                    "buttons": [
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "unique-postback-id1",
+                                "title": "First Button’s Title"
+                            }
+                        },
+                        {
+                            "type": "reply",
+                            "reply": {
+                                "id": "unique-postback-id2",
+                                "title": "Second Button’s Title"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+        let body2: any = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": "543764560397",
+            "type": "interactive",
+            "interactive": {
+                "type": "button",
+                "body": { "text": `hola` },
+                "action": {
+                    "buttons": [
                         {
                             "type": "reply",
                             "reply": {
