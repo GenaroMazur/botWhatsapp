@@ -1,7 +1,13 @@
 export interface whastappObjectResponse {
-    messages:messagesInResponseInterface,
-    statuses:statusesInterface,
-    errors?:errorInterface
+    object:"whatsapp_business_account",
+    entry:[{
+        id:string,
+        changes:[{
+            messages:messagesInResponseInterface,
+            statuses:statusesInterface,
+            errors?:errorInterface
+        }]
+    }]
 }
 
 export interface messagesInResponseInterface{
