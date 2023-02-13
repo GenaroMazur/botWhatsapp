@@ -4,6 +4,7 @@ import morgan from "morgan"
 require("dotenv").config()
 import bodyParser from "body-parser"
 import { indexRouter } from "./routes/index.routes";
+import { whastappObjectResponse } from "./interfaces/whatsappResponseInterface";
 
 server.init()
 server.start().then((err) => {
@@ -20,7 +21,15 @@ server.start().then((err) => {
 
     //listening
     server.app.post("/webhooks", (req, res) => {
-        indexRouter(req.body)
+        const message:whastappObjectResponse = req.body
+        if(message.object==="whatsapp_business_account"){
+            if(message.entry[0].changes[0].field==="messages"){
+                if(message.entry[0].changes[0].value.messaging_product==="whatsapp"){
+                    indexRouter(req.body)
+                }
+            }
+        }
+        return res.status(200).end()
     })
 
     server.app.use(bodyParser.json())

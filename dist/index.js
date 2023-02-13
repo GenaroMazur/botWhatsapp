@@ -22,7 +22,15 @@ server.start().then((err) => {
     });
     //listening
     server.app.post("/webhooks", (req, res) => {
-        (0, index_routes_1.indexRouter)(req.body);
+        const message = req.body;
+        if (message.object === "whatsapp_business_account") {
+            if (message.entry[0].changes[0].field === "messages") {
+                if (message.entry[0].changes[0].value.messaging_product === "whatsapp") {
+                    (0, index_routes_1.indexRouter)(req.body);
+                }
+            }
+        }
+        return res.status(200).end();
     });
     server.app.use(body_parser_1.default.json());
 })
