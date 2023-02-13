@@ -47,6 +47,7 @@ export const sendMessage =async (req:Request, res:Response) => {
         console.log(response);
         
         sendToUser(JSON.stringify(response))
+        res.status(200).end()
     } catch (error) {
         console.log(error);
     }
