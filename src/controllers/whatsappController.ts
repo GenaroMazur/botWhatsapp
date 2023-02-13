@@ -41,7 +41,7 @@ export const sendMessage =async (req:Request, res:Response) => {
         const response:comunMessage = {
             "messaging_product":"whatsapp",
             "type":"text",
-            "to":whastappMessage.entry[0].changes[0].value.messages[0].from,
+            "to":whastappMessage.entry[0].changes[0].value.contacts[0].wa_id,
             "text":{body:echo}
         }
         console.log(response);
