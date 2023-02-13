@@ -18,7 +18,7 @@ export const indexRouter = async (message: whastappObjectResponse): Promise<void
             body: JSON.stringify({ status: "read", messaging_product: "whatsapp", messageId })
         }
 
-        fetch("https://graph.facebook.com/v16.0/109330648741829/messages/" + messageId, responseRead).then(r => console.log(r))
+        fetch("https://graph.facebook.com/v16.0/109330648741829/messages", responseRead).then(r => console.log(r))
         if (message.entry[0].changes[0].value.errors !== undefined) {
             console.log("¡ SUCEDIO UN PROBLEMA !");
             console.error(message.entry[0].changes[0].value.errors)
