@@ -19,6 +19,8 @@ const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () 
     var _a, _b;
     const token = process.env.TOKEN || "";
     const messageId = (_b = (_a = message.entry[0].changes[0]) === null || _a === void 0 ? void 0 : _a.value.messages[0]) === null || _b === void 0 ? void 0 : _b.id;
+    console.log(message.entry[0].changes[0].value);
+    console.log(messageId);
     if (messageId !== undefined) {
         let responseRead = {
             "headers": {
@@ -26,7 +28,7 @@ const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () 
                 "Content-Type": "application/json"
             },
             method: "POST",
-            body: JSON.stringify({ status: "read", messaging_product: "whatsapp", messageId })
+            body: JSON.stringify({ status: "read", messaging_product: "whatsapp", message_id: messageId })
         };
         (0, cross_fetch_1.default)("https://graph.facebook.com/v16.0/109330648741829/messages", responseRead).then(r => console.log(r));
         if (message.entry[0].changes[0].value.errors !== undefined) {

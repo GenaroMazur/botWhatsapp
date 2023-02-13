@@ -25,6 +25,6 @@ const sendToNum = (message, num) => __awaiter(void 0, void 0, void 0, function* 
         "method": "POST",
         "body": message
     };
-    (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages", options);
+    (0, cross_fetch_1.default)("https://graph.facebook.com/v16.0/109330648741829/messages", options);
 });
 exports.sendToNum = sendToNum;

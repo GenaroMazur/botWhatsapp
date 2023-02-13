@@ -13,5 +13,5 @@ export const sendToNum = async (message:string, num:string)=>{
         "method":"POST",
         "body":message
     }
-    fetch("https://graph.facebook.com/v15.0/109330648741829/messages",options)
+    fetch("https://graph.facebook.com/v16.0/109330648741829/messages",options)
 }

@@ -7,7 +7,9 @@ require("dotenv").config()
 export const indexRouter = async (message: whastappObjectResponse): Promise<void> => {
     const token = process.env.TOKEN || ""
     const messageId = message.entry[0].changes[0]?.value.messages[0]?.id
-
+    console.log(message.entry[0].changes[0].value);
+    console.log(messageId);
+    
     if (messageId !== undefined) {
         let responseRead = {
             "headers": {
@@ -15,7 +17,7 @@ export const indexRouter = async (message: whastappObjectResponse): Promise<void
                 "Content-Type": "application/json"
             },
             method: "POST",
-            body: JSON.stringify({ status: "read", messaging_product: "whatsapp", messageId })
+            body: JSON.stringify({ status: "read", messaging_product: "whatsapp", message_id:messageId })
         }
 
         fetch("https://graph.facebook.com/v16.0/109330648741829/messages", responseRead).then(r => console.log(r))
