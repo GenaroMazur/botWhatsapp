@@ -41,7 +41,7 @@ export const sendMessage =async (req:Request, res:Response) => {
         const response:comunMessage = {
             "messaging_product":"whatsapp",
             "type":"text",
-            "to":"5493764560397",
+            "to":"543764560397",
             "text":{body:echo}
         }
         console.log(response);
