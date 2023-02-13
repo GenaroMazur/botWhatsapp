@@ -16,28 +16,25 @@ exports.indexRouter = void 0;
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 require("dotenv").config();
 const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a, _b;
     const token = process.env.TOKEN || "";
-    const messageId = message.entry[0].changes[0].value.messages[0].id;
-    let responseRead = {
-        "headers": {
-            "authorization": token,
-            "Content-Type": "application/json"
-        },
-        method: "PUT",
-        body: JSON.stringify({ status: "read" })
-    };
-    (0, cross_fetch_1.default)("https://graph.facebook.com/v15.0/109330648741829/messages/" + messageId, responseRead).then(r => console.log(r));
-    if (message.entry[0].changes[0].value.errors !== undefined) {
-        console.log("¡ SUCEDIO UN PROBLEMA !");
-        console.error(message.entry[0].changes[0].value.errors);
-        return;
+    const messageId = (_b = (_a = message.entry[0].changes[0]) === null || _a === void 0 ? void 0 : _a.value.messages[0]) === null || _b === void 0 ? void 0 : _b.id;
+    if (messageId !== undefined) {
+        let responseRead = {
+            "headers": {
+                "authorization": token,
+                "Content-Type": "application/json"
+            },
+            method: "POST",
+            body: JSON.stringify({ status: "read", messaging_product: "whatsapp", messageId })
+        };
+        (0, cross_fetch_1.default)("https://graph.facebook.com/v16.0/109330648741829/messages/" + messageId, responseRead).then(r => console.log(r));
+        if (message.entry[0].changes[0].value.errors !== undefined) {
+            console.log("¡ SUCEDIO UN PROBLEMA !");
+            console.error(message.entry[0].changes[0].value.errors);
+            return;
+        }
     }
-    console.log("________________________________________________________");
-    console.log(1, message.entry[0].changes[0].value);
-    console.log(2, message.entry[0].changes[0].value.messages);
-    console.log(4, message.entry[0].changes[0].value.messages[0].id);
-    console.log(5, message.entry[0].id);
-    console.log("________________________________________________________");
     return;
 });
 exports.indexRouter = indexRouter;
