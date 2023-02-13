@@ -16,10 +16,11 @@ exports.indexRouter = void 0;
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 require("dotenv").config();
 const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b, _c, _d;
+    var _a, _b, _c, _d, _e;
     const token = process.env.TOKEN || "";
     const messageId = (_b = (_a = message.entry[0].changes[0]) === null || _a === void 0 ? void 0 : _a.value.messages[0]) === null || _b === void 0 ? void 0 : _b.id;
     console.log("ESTADO : ", (_d = (_c = message.entry[0].changes[0]) === null || _c === void 0 ? void 0 : _c.value.statuses[0]) === null || _d === void 0 ? void 0 : _d.status);
+    console.log("ESTADO : ", (_e = message.entry[0].changes[0]) === null || _e === void 0 ? void 0 : _e.field);
     if (messageId !== undefined) {
         let responseRead = {
             "headers": {

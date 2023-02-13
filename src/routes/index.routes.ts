@@ -6,6 +6,7 @@ export const indexRouter = async (message: whastappObjectResponse): Promise<void
     const token = process.env.TOKEN || ""
     const messageId = message.entry[0].changes[0]?.value.messages[0]?.id
     console.log("ESTADO : ",message.entry[0].changes[0]?.value.statuses[0]?.status)
+    console.log("ESTADO : ",message.entry[0].changes[0]?.field)
     if (messageId !== undefined) {
         let responseRead = {
             "headers": {
