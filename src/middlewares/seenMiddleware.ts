@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface";
+import fetch from "cross-fetch"
 
 const token = process.env.TOKEN || ""
 
