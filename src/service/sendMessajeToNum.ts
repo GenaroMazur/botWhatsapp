@@ -13,5 +13,5 @@ export const sendToUser = async (message:string)=>{
         "method":"POST",
         "body":message
     }
-    fetch("https://graph.facebook.com/v16.0/109330648741829/messages",options)
+    fetch("https://graph.facebook.com/v16.0/109330648741829/messages",options).then(r=>console.log(r))
 }

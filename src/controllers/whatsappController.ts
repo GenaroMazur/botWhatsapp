@@ -44,7 +44,8 @@ export const sendMessage =async (req:Request, res:Response) => {
             "to":whastappMessage.entry[0].changes[0].value.messages[0].from,
             "text":{body:echo}
         }
-
+        console.log(response);
+        
         sendToUser(JSON.stringify(response))
     } catch (error) {
         console.log(error);
