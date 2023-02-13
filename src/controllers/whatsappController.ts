@@ -29,7 +29,7 @@ export const receiveMessage =async (req:Request, res:Response, next:NextFunction
         console.log(error)
     }
 
-    return res.status(200)
+    return res.send("EVENT_RECEIVED").status(200).end()
 }
 
 export const sendMessage =async (req:Request, res:Response) => {
@@ -47,7 +47,7 @@ export const sendMessage =async (req:Request, res:Response) => {
         console.log(response);
         
         sendToUser(JSON.stringify(response))
-        res.status(200).end()
+        res.send("EVENT_RECEIVED").status(200).end()
     } catch (error) {
         console.log(error);
     }
