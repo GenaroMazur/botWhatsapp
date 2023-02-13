@@ -30,8 +30,8 @@ export class SERVER {
                 console.log(`=============== Servidor en \x1b[32mlinea\x1b[0m Puerto ${port} ===============`);
             })
             
-            this.app.use(express.json({limit:"30mb"}))
-            this.app.use(express.urlencoded({ limit:"30mb",extended: true }))
+            this.app.use(express.json())
+            this.app.use(express.urlencoded({ extended: true }))
             this.app.use(cors())
 
         } catch (error) {
