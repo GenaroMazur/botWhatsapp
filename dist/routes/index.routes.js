@@ -16,11 +16,10 @@ exports.indexRouter = void 0;
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
 require("dotenv").config();
 const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _a, _b, _c, _d;
     const token = process.env.TOKEN || "";
     const messageId = (_b = (_a = message.entry[0].changes[0]) === null || _a === void 0 ? void 0 : _a.value.messages[0]) === null || _b === void 0 ? void 0 : _b.id;
-    console.log(message.entry[0].changes[0].value);
-    console.log(messageId);
+    console.log("ESTADO : ", (_d = (_c = message.entry[0].changes[0]) === null || _c === void 0 ? void 0 : _c.value.statuses[0]) === null || _d === void 0 ? void 0 : _d.status);
     if (messageId !== undefined) {
         let responseRead = {
             "headers": {
@@ -30,12 +29,12 @@ const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () 
             method: "POST",
             body: JSON.stringify({ status: "read", messaging_product: "whatsapp", message_id: messageId })
         };
-        (0, cross_fetch_1.default)("https://graph.facebook.com/v16.0/109330648741829/messages", responseRead).then(r => console.log(r));
-        if (message.entry[0].changes[0].value.errors !== undefined) {
-            console.log("¡ SUCEDIO UN PROBLEMA !");
-            console.error(message.entry[0].changes[0].value.errors);
-            return;
-        }
+        (0, cross_fetch_1.default)("https://graph.facebook.com/v16.0/109330648741829/messages", responseRead);
+    }
+    if (message.entry[0].changes[0].value.errors !== undefined) {
+        console.log("¡ SUCEDIO UN PROBLEMA !");
+        console.error(message.entry[0].changes[0].value.errors);
+        return;
     }
     return;
 });

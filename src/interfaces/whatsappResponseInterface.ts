@@ -11,18 +11,12 @@ export interface whastappObjectResponse {
                 },
                 contacts:[contactInterface]
                 messages:[messageInMessagesInterface],
-                statuses:statusesInterface,
-                errors?:errorInterface
+                statuses:[statusesInterface],
+                errors?:[errorInterface]
             },
             field:string
         }]
     }]
-}
-
-export interface messagesInResponseInterface{
-    contacts:[contactInterface],
-    messages:[messageInMessagesInterface],
-    recipient_id:string
 }
 
     export interface contactInterface{
@@ -36,21 +30,44 @@ export interface messagesInResponseInterface{
         id:string,
         identity?:identityInMessageInterface,
         timestamp:string,
-        type:"audio"|"contacts"|"document"|"image"|"location"|"text"|"unknown"|"video"|"voice"|"ephemeral",
-        audio?:mediaInMessage, 
+        type:"audio"|"contacts"|"document"|"image"|"location"|"text"|"unknown"|"video"|"voice"|"button",
+        audio?:{id:string,mime_type:string}, 
         contacts?:contactInterface, 
         document?:mediaInMessage, 
         image?:mediaInMessage, 
         location?:locationInMessage, 
         system?:{body:string}, 
-        video?:mediaInMessage, 
+        video?:mediaInMessage,
+        sticker?:stickerInMessageInterface
         voice?:mediaInMessage,
         text?:{body:string},
         interactive?:interactiveInMessage,
-        referral?:referralInMessage
+        referral?:referralInMessage,
+        button?:{payload:string, text:string},
+        order:orderInMessageInterface
     }
 
+        export interface stickerInMessageInterface{
+            id:string,
+            mime_type:string,
+            sha256:string,
+            animated:boolean
+        }
+
+        export interface orderInMessageInterface{
+            catalog_id:string,
+            text:string,
+            product_items:[{
+                product_retailer_id:string,
+                quantity:string,
+                item_price:string,
+                currency:string
+            }]
+        }
+
         export interface contextInMessageInterface{
+            forwarded:boolean,
+            frequently_forwarded:boolean,
             from:string,
             id:string,
             referred_product?:{
@@ -67,10 +84,8 @@ export interface messagesInResponseInterface{
         
         export interface mediaInMessage {
             caption:string,
-            file:string//deprecated,
             filename:string,
             id:string,
-            metadata:any,
             mime_type:string,
             sha256:string
         }
@@ -95,9 +110,10 @@ export interface messagesInResponseInterface{
         }
 
         export interface interactiveInMessage{
-            type:"list_reply"|"button_reply",
-            list_reply?:{id:string, description:string, tittle:string},
-            button_reply?:{id:string, tittle:string}
+            type:{
+                list_reply?:{id:string, description:string, tittle:string},
+                button_reply?:{id:string, tittle:string}
+            }
         }
 
         export interface referralInMessage{
@@ -106,8 +122,10 @@ export interface messagesInResponseInterface{
             source_type:string,
             source_id:string,
             source_url:string,
-            image:mediaInMessage
-            video:mediaInMessage
+            media_type:string,
+            image_url:string,
+            video_url:string,
+            thumbnail_url:string
         }
 
 
@@ -118,11 +136,11 @@ export interface messagesInResponseInterface{
 export interface statusesInterface{
     id:string,
     recipient_id:string,
-    status:"deleted"|"delivered"|"failed"|"read"|"sent"|"warning",
+    status:"delivered"|"read"|"sent",
     timestamp:string,
-    type:"message",
     conversation:conversationInStatus,
-    pricing:pricingInStatus
+    pricing:pricingInStatus,
+    errors?:errorInterface
 }
     
     export interface conversationInStatus{
@@ -132,13 +150,12 @@ export interface statusesInterface{
 
     export interface pricingInStatus {
         pricing_model:"CBP"|"NBP",
-        billable:boolean,
         category:"business_initiated"|"user_initiated"|"referral_conversion"
     }
 
 export interface errorInterface{
     code:number,
     tittle:string,
-    detail:string,
-    href:string
+    message:String,
+    error_data:{detail:string}
 }
