@@ -4,11 +4,11 @@ import fetch from "cross-fetch"
 require("dotenv").config()
 export const indexRouter = async (message: whastappObjectResponse): Promise<void> => {
     const token = process.env.TOKEN || ""
-    console.log(message);
+    console.log(message.entry[0].changes[0]);
     
     const messageId = message.entry[0]?.changes[0]?.value.messages[0]?.id
-    console.log("ESTADO : ",message.entry[0]?.changes[0]?.value?.statuses[0]?.status)
-    console.log("TIPO : ",message.entry[0]?.changes[0]?.field)
+    console.log("ESTADO : "+message.entry[0].changes[0].value?.statuses[0]?.status)
+    console.log("TIPO : "+message.entry[0].changes[0].field)
     if (messageId !== undefined) {
         let responseRead = {
             "headers": {
