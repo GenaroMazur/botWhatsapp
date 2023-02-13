@@ -18,6 +18,7 @@ require("dotenv").config();
 const indexRouter = (message) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
     const token = process.env.TOKEN || "";
+    console.log(message);
     const messageId = (_c = (_b = (_a = message.entry[0]) === null || _a === void 0 ? void 0 : _a.changes[0]) === null || _b === void 0 ? void 0 : _b.value.messages[0]) === null || _c === void 0 ? void 0 : _c.id;
     console.log("ESTADO : ", (_g = (_f = (_e = (_d = message.entry[0]) === null || _d === void 0 ? void 0 : _d.changes[0]) === null || _e === void 0 ? void 0 : _e.value) === null || _f === void 0 ? void 0 : _f.statuses[0]) === null || _g === void 0 ? void 0 : _g.status);
     console.log("TIPO : ", (_j = (_h = message.entry[0]) === null || _h === void 0 ? void 0 : _h.changes[0]) === null || _j === void 0 ? void 0 : _j.field);
