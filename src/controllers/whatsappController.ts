@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { comunMessage } from "../interfaces/interfaces";
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface";
 import { sendToUser } from "../service/sendMessajeToNum";
 
@@ -34,8 +35,17 @@ export const receiveMessage =async (req:Request, res:Response, next:NextFunction
 export const sendMessage =async (req:Request, res:Response) => {
     try {
         const whastappMessage:whastappObjectResponse = req.body
-        const response = JSON.stringify(whastappMessage.entry[0].changes[0].value.messages[0].text?.body)
-        sendToUser(response)
+        const echo = whastappMessage.entry[0].changes[0].value.messages[0].text?.body || "ERROR"
+
+
+        const response:comunMessage = {
+            "messaging_product":"whatsapp",
+            "type":"text",
+            "to":whastappMessage.entry[0].changes[0].value.messages[0].from,
+            "text":{body:echo}
+        }
+
+        sendToUser(JSON.stringify(response))
     } catch (error) {
         console.log(error);
     }
