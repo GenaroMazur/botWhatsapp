@@ -4,7 +4,7 @@ import { sendToWhastapp } from "../interfaces/interfaces";
 require("dotenv").config()
 const token = process.env.TOKEN || ""
 
-export const sendToNum = async (message:string, num:string)=>{
+export const sendToUser = async (message:string)=>{
     const options:sendToWhastapp = {
         "headers":{
             "authorization":token,

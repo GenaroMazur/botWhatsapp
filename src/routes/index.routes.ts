@@ -1,6 +1,6 @@
 require("dotenv").config()
 import { Router } from "express";
-import { receiveMessage, subsWebhook } from "../controllers/whatsappController";
+import { receiveMessage, sendMessage, subsWebhook } from "../controllers/whatsappController";
 import { seenMiddleware } from "../middlewares/seenMiddleware";
 const router = Router()
 
@@ -8,7 +8,7 @@ const router = Router()
 router.get("/webhooks", subsWebhook)
 
 //listening
-router.post("/webhooks",seenMiddleware,receiveMessage)
+router.post("/webhooks", seenMiddleware, receiveMessage, sendMessage)
 
 
 export default router
