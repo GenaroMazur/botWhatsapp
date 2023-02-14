@@ -9,7 +9,7 @@ export const seenMiddleware = async (req: Request, res: Response, next: NextFunc
     try {
 
         const message: whastappObjectResponse = req.body
-        const messageId = message.entry[0].changes[0].value.messages[0]?.id
+        const messageId = message.entry[0].changes[0]?.value?.messages[0]?.id
 
         if (messageId !== undefined) {
             let responseRead = {
