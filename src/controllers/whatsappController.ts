@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { comunMessage } from "../interfaces/interfaces";
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface";
-import { sendToUser } from "../service/sendMessajeToNum";
-import { processMessage } from "../shared/proccesMessage";
+import { persistConversation, processMessage } from "../shared/proccesMessage";
 
 
 export const subsWebhook = async (req: Request, res: Response) => {
@@ -38,8 +36,8 @@ export const sendMessage =async (req:Request, res:Response) => {
     try {
         const whastappMessage:whastappObjectResponse = req.body
         const text = whastappMessage.entry[0].changes[0].value.messages[0].text?.body || "ERROR"
-
-
+        const celphoneNum = whastappMessage.entry[0].changes[0].value.messages[0].from
+        await persistConversation(whastappMessage)
         processMessage(text, 543764560397)
     } catch (error) {
         console.log(error);
