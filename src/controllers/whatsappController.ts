@@ -40,7 +40,7 @@ export const sendMessage =async (req:Request, res:Response) => {
         const text = whastappMessage.entry[0].changes[0].value.messages[0].text?.body || "ERROR"
 
 
-        processMessage(text, 3764560397)
+        processMessage(text, 543764560397)
     } catch (error) {
         console.log(error);
     }
