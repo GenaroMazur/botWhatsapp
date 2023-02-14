@@ -9,8 +9,10 @@ export const seenMiddleware = async (req: Request, res: Response, next: NextFunc
     try {
 
         const message: whastappObjectResponse = req.body
-        const messageId = message.entry[0].changes[0]?.value?.messages[0]?.id
-
+        if(message.entry[0].changes[0] &&(message.entry[0].changes[0].value.messages[0] !== undefined || message.entry[0].changes[0].value.messages[0] !== null)){
+            
+            const messageId = message.entry[0].changes[0].value.messages[0].id
+            
         if (messageId !== undefined) {
             let responseRead = {
                 "headers": {
@@ -21,6 +23,7 @@ export const seenMiddleware = async (req: Request, res: Response, next: NextFunc
                 body: JSON.stringify({ status: "read", messaging_product: "whatsapp", message_id: messageId })
             }
             fetch("https://graph.facebook.com/v16.0/109330648741829/messages", responseRead)
+        }
         }
     } catch (error) {
         console.log(error);
