@@ -1,5 +1,5 @@
 import { sendToUser } from "../service/sendMessajeToNum"
-import { dniModel, welcomeModel } from "./modelsMessages"
+import { datesModels, dniModel, welcomeModel } from "./modelsMessages"
 import nodePersist from "node-persist"
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { comunMessage, turnInterface } from "../interfaces/interfaces"
@@ -9,6 +9,7 @@ export const processMessage = async(text:string, num:number, conversation:turnIn
     const userMessage:string = text.toLowerCase()
     console.log(conversation);
     if(conversation.fullName===""){
+
         if(userMessage.length>4){
             conversation.fullName=text
             await nodePersist.updateItem(key, conversation)
@@ -22,10 +23,39 @@ export const processMessage = async(text:string, num:number, conversation:turnIn
             }
             sendToUser(JSON.stringify(errorMessage))
         }
-    } else {
+
+    } else if(conversation.fullName===null){
+
         conversation.fullName=""
         await nodePersist.updateItem(key, conversation)
         sendToUser(JSON.stringify(welcomeModel(num)))
+
+    } else if(conversation.fullName!=="" && conversation.fullName!==null){
+
+        if((userMessage.length==7 || userMessage.length==8) && userMessage.split("").every(value=>nums.includes(value))){
+            conversation.document=userMessage
+            await nodePersist.updateItem(key, conversation)
+            sendToUser(JSON.stringify(datesModels(num)))
+        } else {
+            const errorMessage:comunMessage={
+                "messaging_product":"whatsapp",
+                "text":{"body":"Numero de DNI invalido"},
+                "type":"text",
+                "to":num.toString()
+            }
+            sendToUser(JSON.stringify(errorMessage))
+        }
+
+    }
+    
+    else {
+        const errorMessage:comunMessage={
+            "messaging_product":"whatsapp",
+            "text":{"body":"No entiendo su peticion"},
+            "type":"text",
+            "to":num.toString()
+        }
+        sendToUser(JSON.stringify(errorMessage))
     }
 }
 

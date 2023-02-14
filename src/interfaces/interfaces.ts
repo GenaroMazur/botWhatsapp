@@ -32,6 +32,50 @@ export interface buttons {
     }
 }
 
+export interface list {
+    "messaging_product": "whatsapp",
+    "to": string,
+    "type": "interactive",
+    "interactive": {
+        "type":"list",
+        "tittle"?:{
+            "type": "text" | "image" | "video" | "document"
+            "text": string
+            "image"?: {
+                "link": string,
+                "provider": {
+                    "name": string
+                }
+            }
+            "video"?: {
+                "link": string,
+                "provider": {
+                    "name": string
+                }
+            }
+            "document"?: {
+                "id": string,
+                "filename": string
+            }
+        },
+        "body":{"text":string},
+        "footer"?:{"text":string},
+        "action":{
+            "button":"Fechas Disponibles",
+            "sections":[sectionsInList]
+        }
+    }
+}
+
+export interface sectionsInList {
+    "title":string,
+    "rows":[{
+        "id":string,
+        "title":string,
+        "description":string
+    }]
+}
+
 export interface button {
 
     "type": "reply",
@@ -56,7 +100,7 @@ export interface turnInterface{
     document:string,
     date:string,
     hour:string,
-    place:""|"UNAM"|"SHOPPING"|"ROSARIO"
+    place:""|"UNAM"|"SHOPPING"|"OBERA"
 } 
 
 
