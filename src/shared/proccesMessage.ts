@@ -68,10 +68,21 @@ export const processMessage = async (text: string, num: number, conversation: tu
     } else if (conversation.date!== "" && conversation.place === "") {
         
         const place:any = userMessage
-        conversation.place = place
-        await nodePersist.updateItem(key, conversation)
-        console.log(conversation);
-        sendToUser(JSON.stringify(welcomeModel(num)))
+        if(place==="terminal unam"||place==="shopping posadas"||place==="obera bicentenario"){
+
+            conversation.place = place
+            await nodePersist.updateItem(key, conversation)
+            console.log(conversation);
+            sendToUser(JSON.stringify(welcomeModel(num)))
+        } else {
+            const errorMessage: comunMessage = {
+                "messaging_product": "whatsapp",
+                "text": { "body": "Sucursal invalida" },
+                "type": "text",
+                "to": num.toString()
+            }
+            sendToUser(JSON.stringify(errorMessage))
+        }
 
     } else {
 
