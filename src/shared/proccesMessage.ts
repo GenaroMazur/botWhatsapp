@@ -5,13 +5,13 @@ import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { comunMessage, turnInterface } from "../interfaces/interfaces"
 const nums = "0123456789"
 
-export const processMessage = async(text:string, num:number, conversation:turnInterface)=>{
+export const processMessage = async(text:string, num:number, conversation:turnInterface, key:string)=>{
     const userMessage:string = text.toLowerCase()
     console.log(conversation);
     if(conversation.fullName===""){
         if(userMessage.length>4){
             conversation.fullName=text
-            await nodePersist.updateItem(`${num}`, conversation)
+            await nodePersist.updateItem(key, conversation)
             sendToUser(JSON.stringify(dniModel(num)))
         } else {
             const errorMessage:comunMessage={
@@ -24,7 +24,7 @@ export const processMessage = async(text:string, num:number, conversation:turnIn
         }
     } else {
         conversation.fullName=""
-        await nodePersist.updateItem(`${num}`, conversation)
+        await nodePersist.updateItem(key, conversation)
         sendToUser(JSON.stringify(welcomeModel(num)))
     }
 }
