@@ -61,7 +61,7 @@ export interface list {
         "body":{"text":string},
         "footer"?:{"text":string},
         "action":{
-            "button":"Fechas Disponibles",
+            "button":string,
             "sections":[sectionsInList]
         }
     }
@@ -69,11 +69,11 @@ export interface list {
 
 export interface sectionsInList {
     "title":string,
-    "rows":[{
+    "rows":Array<{
         "id":string,
         "title":string,
         "description":string
-    }?]
+    }>
 }
 
 export interface button {
@@ -100,7 +100,7 @@ export interface turnInterface{
     document:string,
     date:string,
     hour:string,
-    place:""|"UNAM"|"SHOPPING"|"OBERA"
+    place:""|"terminal unam"|"shopping posadas"|"obera bicentenario"
 } 
 
 

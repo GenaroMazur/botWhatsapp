@@ -1,5 +1,5 @@
 import { sendToUser } from "../service/sendMessajeToNum"
-import { datesModels, dniModel, welcomeModel } from "./modelsMessages"
+import { datesModels, dniModel, placeModels, welcomeModel } from "./modelsMessages"
 import nodePersist from "node-persist"
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { comunMessage, turnInterface } from "../interfaces/interfaces"
@@ -48,10 +48,22 @@ export const processMessage = async (text: string, num: number, conversation: tu
 
     } else if (conversation.document !== "" && conversation.date === "") {
 
-        conversation.date = userMessage
-        console.log(userMessage);
+        if(userMessage.split("-").length===2 && userMessage.split("-")[0].length===2 && userMessage.split("-")[1].length===2){
+
+            conversation.date = userMessage
+            await nodePersist.updateItem(key, conversation)
+            sendToUser(JSON.stringify(placeModels(num)))
+        } else {
+
+        }
+
+
+    } else if (conversation.date!== "" && conversation.place === "") {
+        
+        const place:any = userMessage
+        conversation.place = place
         await nodePersist.updateItem(key, conversation)
-        sendToUser(JSON.stringify(datesModels(num)))
+        sendToUser(JSON.stringify(welcomeModel(num)))
 
     } else {
 
@@ -62,7 +74,7 @@ export const processMessage = async (text: string, num: number, conversation: tu
             "to": num.toString()
         }
         sendToUser(JSON.stringify(errorMessage))
-        
+
     }
 }
 
