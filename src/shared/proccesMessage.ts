@@ -52,9 +52,16 @@ export const processMessage = async (text: string, num: number, conversation: tu
 
             conversation.date = userMessage
             await nodePersist.updateItem(key, conversation)
+            console.log(conversation);
             sendToUser(JSON.stringify(placeModels(num)))
         } else {
-
+            const errorMessage: comunMessage = {
+                "messaging_product": "whatsapp",
+                "text": { "body": "Fecha invalida invalido" },
+                "type": "text",
+                "to": num.toString()
+            }
+            sendToUser(JSON.stringify(errorMessage))
         }
 
 
@@ -63,6 +70,7 @@ export const processMessage = async (text: string, num: number, conversation: tu
         const place:any = userMessage
         conversation.place = place
         await nodePersist.updateItem(key, conversation)
+        console.log(conversation);
         sendToUser(JSON.stringify(welcomeModel(num)))
 
     } else {
