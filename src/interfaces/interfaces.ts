@@ -52,7 +52,7 @@ export interface comunMessage {
 
 
 export interface turnInterface{
-    fullName:string,
+    fullName:string | null,
     document:string,
     date:string,
     hour:string,
