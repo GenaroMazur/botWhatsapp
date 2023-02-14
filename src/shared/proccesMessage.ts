@@ -1,5 +1,5 @@
 import { sendToUser } from "../service/sendMessajeToNum"
-import { datesModels, dniModel, placeModels, welcomeModel } from "./modelsMessages"
+import { datesModels, dniModel, hourModel, placeModels, welcomeModel } from "./modelsMessages"
 import nodePersist from "node-persist"
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { comunMessage, turnInterface } from "../interfaces/interfaces"
@@ -73,11 +73,29 @@ export const processMessage = async (text: string, num: number, conversation: tu
             conversation.place = place
             await nodePersist.updateItem(key, conversation)
             console.log(conversation);
-            sendToUser(JSON.stringify(welcomeModel(num)))
+            sendToUser(JSON.stringify(hourModel(num, conversation)))
         } else {
             const errorMessage: comunMessage = {
                 "messaging_product": "whatsapp",
                 "text": { "body": "Sucursal invalida" },
+                "type": "text",
+                "to": num.toString()
+            }
+            sendToUser(JSON.stringify(errorMessage))
+        }
+
+    } else if (conversation.place !== "" && conversation.hour === "") {
+        
+        const hora = userMessage.split(":")
+        if(hora.length===2, hora[0].length===2, hora[1].length===4){
+            conversation.hour = userMessage
+            await nodePersist.updateItem(key, conversation)
+            console.log(conversation);
+            sendToUser(JSON.stringify(welcomeModel(num)))
+        } else {
+            const errorMessage: comunMessage = {
+                "messaging_product": "whatsapp",
+                "text": { "body": "Hora invalida" },
                 "type": "text",
                 "to": num.toString()
             }

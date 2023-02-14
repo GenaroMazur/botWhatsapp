@@ -1,5 +1,5 @@
 import { Turn } from "../database/models/Turnos"
-import { list } from "../interfaces/interfaces"
+import { list, turnInterface } from "../interfaces/interfaces"
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper"
 
 const welcomeMessage = "*¡Bienvenido a Servicios Urbanos S.A!*\n\nPara sacar turno para reclamos ingresar los siguientes datos.\nSu nombre y apellido completos. \n\nPor favor para otros tipos de consultas comunicarse al 0810-444-7823."
@@ -81,4 +81,53 @@ export const placeModels = (num:number)=>{
         }
     }
     return listPlace
+}
+
+export const hourModel = (num:number, conversation:turnInterface)=>{
+    let hours:Array<string> = []
+    let listHours : list = {
+        "messaging_product":"whatsapp",
+        "type":"interactive",
+        "to":num.toString(),
+        "interactive":{
+            "type":"list",
+            "body":{"text":"Eliga Lugar donde quiere realizar su turno"},
+            "action":{
+                "button":"Sucursales",
+                "sections":[
+                    {
+                        "title":"",
+                        "rows":[
+                            //Aqui iran las horas
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+    if(conversation.place==="shopping posadas"){
+        hours.push("09:00hs")
+        for(let x = 10 ; x<22 ; x++){
+            hours.push(`${x}:00hs`)
+        }
+    } else if(conversation.place === "terminal unam"){
+        hours.push("08:30hs")
+        hours.push("09:00hs")
+        for(let x = 10 ; x<14 ; x++){
+            hours.push(`${x}:00hs`)
+        }
+        for(let x = 14 ; x<17 ; x++){
+            hours.push(`${x}:00hs`)
+        }
+    } else {
+        hours.push("09:00hs")
+        for(let x = 10 ; x<22 ; x++){
+            hours.push(`${x}:00hs`)
+        }
+    }
+
+    hours.map((hour, index)=>{
+        listHours.interactive.action.sections[0].rows.push({"id":`${index}`, "title":hour, "description":""})
+    })
+    return listHours
 }
