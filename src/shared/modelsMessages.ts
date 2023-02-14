@@ -71,8 +71,8 @@ export const placeModels = (num:number)=>{
                     {
                         "title":"",
                         "rows":[
-                            {"id":"0", "title":"shopping posadas", "description":"Bolivar y San lorenzo 1979, abierto de Lunes a Sábados de 9:00hs a 21:00hs"},
-                            {"id":"1", "title":"terminal unam", "description":"Colectora Fernando Elias, abierto de Lunes a Viernes de 08:30hs a 13:00hs / 14:00hs a 17:30hs. Sábados de 08:00hs a 12:00hs"},
+                            {"id":"0", "title":"shopping posadas", "description":"Bolivar y San lorenzo 1979"},
+                            {"id":"1", "title":"terminal unam", "description":"Colectora Fernando Elias"},
                             {"id":"2", "title":"obera bicentenario", "description":"a"}
                         ]
                     }
