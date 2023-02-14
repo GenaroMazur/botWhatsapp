@@ -110,10 +110,9 @@ export interface whastappObjectResponse {
         }
 
         export interface interactiveInMessage{
-            type:{
-                list_reply?:{id:string, description:string, tittle:string},
-                button_reply?:{id:string, tittle:string}
-            }
+            type:"list_reply"|"button_reply"
+            list_reply?:{id:string, description:string, tittle:string},
+            button_reply?:{id:string, tittle:string}
         }
 
         export interface referralInMessage{

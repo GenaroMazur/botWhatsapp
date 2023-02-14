@@ -35,10 +35,7 @@ export const receiveMessage =async (req:Request, res:Response, next:NextFunction
 export const sendMessage =async (req:Request, res:Response) => {
     try {
         const whastappMessage:whastappObjectResponse = req.body
-        console.log(whastappMessage.entry[0].changes[0].value.messages[0])
-        console.log(whastappMessage.entry[0].changes[0].value.messages[0]?.interactive)
-        console.log(whastappMessage.entry[0].changes[0].value.messages[0].interactive?.type)
-        const text = whastappMessage.entry[0].changes[0].value.messages[0].text?.body || "error"
+        const text = whastappMessage.entry[0].changes[0].value.messages[0].text?.body || whastappMessage.entry[0].changes[0].value.messages[0].interactive?.list_reply?.tittle|| "error"
         const celphoneNum = whastappMessage.entry[0].changes[0].value.messages[0].from
         processMessage(text, 543764560397, await persistConversation(whastappMessage), celphoneNum)
     } catch (error) {
