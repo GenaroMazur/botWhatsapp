@@ -94,6 +94,7 @@ export const processMessage = async (text: string, num: number, conversation: tu
                 await nodePersist.updateItem(key, conversation)
                 console.log(conversation);
                 sendToUser(JSON.stringify(welcomeModel(num)))
+                await nodePersist.del(key)
             } else {
                 const errorMessage: comunMessage = {
                     "messaging_product": "whatsapp",
