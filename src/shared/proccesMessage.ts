@@ -30,7 +30,7 @@ export const processMessage = async (text: string, num: number, conversation: tu
         await nodePersist.updateItem(key, conversation)
         sendToUser(JSON.stringify(welcomeModel(num)))
 
-    } else if (conversation.fullName !== "" && conversation.fullName !== null) {
+    } else if (conversation.fullName !== "" && conversation.fullName !== null && conversation.document === "") {
 
         if ((userMessage.length == 7 || userMessage.length == 8) && userMessage.split("").every(value => nums.includes(value))) {
             conversation.document = userMessage
@@ -46,11 +46,11 @@ export const processMessage = async (text: string, num: number, conversation: tu
             sendToUser(JSON.stringify(errorMessage))
         }
 
-    } else if (conversation.document !== "") {
+    } else if (conversation.document !== "" && conversation.date === "") {
         conversation.date = userMessage
         console.log(userMessage);
         await nodePersist.updateItem(key, conversation)
-        sendToUser(JSON.stringify(await datesModels(num)))
+        sendToUser(JSON.stringify(datesModels(num)))
     } else {
         const errorMessage: comunMessage = {
             "messaging_product": "whatsapp",

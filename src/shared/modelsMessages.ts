@@ -28,13 +28,7 @@ let turnsDays:Array<string> = []
 for (let x=1;x<11;x++){
     turnsDays.push(dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0].slice(5))
 }
-export const datesModels = async (num:number)=>{
-    let query: any = {
-        "$gte": dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0],
-        "$lte": dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * 15, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
-    }
-    console.log(query);
-    
+export const datesModels =(num:number)=>{    
     let listDate:list = {
         "messaging_product":"whatsapp",
         "type":"interactive",
@@ -59,7 +53,6 @@ export const datesModels = async (num:number)=>{
     turnsDays.forEach((day,index)=>{
         listDate.interactive.action.sections[0].rows.push({"id":index.toString(), "title":day, "description":`Mes ${day.split("-")[0]}, dia ${day.split("-")[1]}`})
     })
-    console.log(listDate.interactive.action.sections[0].rows);
     
     return listDate
 }
