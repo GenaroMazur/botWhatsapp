@@ -29,8 +29,11 @@ const turnoSchema = new Schema(
             type: String,
             trim: true,
             required:[true,"Fecha requerida"]
+        },
+        confirm: {
+            type: Boolean,
+            default: false
         }
-
 
     },
     {

@@ -24,6 +24,10 @@ export const dniModel = (num:number)=>{
     }
 }
 
+let turnsDays:Array<string> = []
+for (let x=1;x<11;x++){
+    turnsDays.push(dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0].slice(4))
+}
 export const datesModels = async (num:number)=>{
     let query: any = {
         "$gte": dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0],
@@ -51,15 +55,9 @@ export const datesModels = async (num:number)=>{
             }
         }
     }
-    const turns = await Turn.find({
-        "reserved":false,
-        "day":query
-    }).select({
-        "day":1
-    })
-
-    turns.forEach((turn,index)=>{
-        listDate.interactive.action.sections[0].rows.push({"id":index.toString(), "title":turn.day, "description":"disponible"})
+    
+    turnsDays.forEach((day,index)=>{
+        listDate.interactive.action.sections[0].rows.push({"id":index.toString(), "title":day, "description":"disponible"})
     })
     console.log(listDate.interactive.action.sections[0].rows);
     

@@ -12,19 +12,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendToUser = void 0;
+exports.seenMiddleware = void 0;
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
-require("dotenv").config();
 const token = process.env.TOKEN || "";
-const sendToUser = (message) => __awaiter(void 0, void 0, void 0, function* () {
-    const options = {
-        "headers": {
-            "authorization": token,
-            "Content-Type": "application/json"
-        },
-        "method": "POST",
-        "body": message
-    };
-    (0, cross_fetch_1.default)("https://graph.facebook.com/v16.0/109330648741829/messages", options);
+const seenMiddleware = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const message = req.body;
+        if (message.entry[0].changes[0].value.messages) {
+            const messageId = message.entry[0].changes[0].value.messages[0].id;
+            if (messageId !== undefined) {
+                let responseRead = {
+                    "headers": {
+                        "authorization": token,
+                        "Content-Type": "application/json"
+                    },
+                    method: "POST",
+                    body: JSON.stringify({ status: "read", messaging_product: "whatsapp", message_id: messageId })
+                };
+                (0, cross_fetch_1.default)("https://graph.facebook.com/v16.0/109330648741829/messages", responseRead);
+            }
+        }
+    }
+    catch (error) {
+        console.log(error);
+    }
+    next();
 });
-exports.sendToUser = sendToUser;
+exports.seenMiddleware = seenMiddleware;

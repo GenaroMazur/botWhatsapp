@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SERVER = void 0;
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const node_persist_1 = __importDefault(require("node-persist"));
+const mongoose_1 = require("./database/mongoose");
 require("dotenv").config();
 class SERVER {
     static get instance() { return this._instance || (this._instance = new this()); }
@@ -33,9 +35,16 @@ class SERVER {
                 this.http = this.app.listen(port, () => {
                     console.log(`=============== Servidor en \x1b[32mlinea\x1b[0m Puerto ${port} ===============`);
                 });
-                this.app.use(express_1.default.json({ limit: "30mb" }));
-                this.app.use(express_1.default.urlencoded({ limit: "30mb", extended: true }));
+                this.app.use(express_1.default.json());
+                this.app.use(express_1.default.urlencoded({ extended: true }));
                 this.app.use((0, cors_1.default)());
+                (0, mongoose_1.mongoosedb)(urlDb);
+                yield node_persist_1.default.init({
+                    "dir": __dirname + "./../conversations",
+                    "expiredInterval": 60000 * 60 * 2,
+                    "stringify": JSON.stringify,
+                    "parse": JSON.parse
+                });
             }
             catch (error) {
                 return error;
