@@ -51,7 +51,13 @@ export interface comunMessage {
 }
 
 
-
+export interface turnInterface{
+    fullName:string,
+    document:string,
+    date:string,
+    hour:string,
+    place:""|"UNAM"|"SHOPPING"|"ROSARIO"
+} 
 
 
 export interface sendToWhastapp {
