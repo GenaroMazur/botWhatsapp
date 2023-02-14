@@ -73,7 +73,7 @@ export interface sectionsInList {
         "id":string,
         "title":string,
         "description":string
-    }]
+    }?]
 }
 
 export interface button {

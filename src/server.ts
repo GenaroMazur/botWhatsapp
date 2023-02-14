@@ -2,6 +2,7 @@ import express from "express"
 import {Server} from "http"
 import cors from "cors"
 import nodePersist from "node-persist"
+import { mongoosedb } from "./database/mongoose"
 
 require("dotenv").config()
 
@@ -33,6 +34,7 @@ export class SERVER {
             this.app.use(express.json())
             this.app.use(express.urlencoded({ extended: true }))
             this.app.use(cors())
+            mongoosedb(urlDb)
             await nodePersist.init({
                 "dir":__dirname+"./../conversations",
                 "expiredInterval":60000*60*2,
