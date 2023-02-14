@@ -1,5 +1,5 @@
 import { sendToUser } from "../service/sendMessajeToNum"
-import { datesModels, dniModel, hourModel, placeModels, welcomeModel } from "./modelsMessages"
+import { datesModels, dniModel, hourModel, momentModel, placeModels, welcomeModel } from "./modelsMessages"
 import nodePersist from "node-persist"
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { comunMessage, turnInterface } from "../interfaces/interfaces"
@@ -48,7 +48,7 @@ export const processMessage = async (text: string, num: number, conversation: tu
 
     } else if (conversation.document !== "" && conversation.date === "") {
 
-        if(userMessage.split("-").length===2 && userMessage.split("-")[0].length===2 && userMessage.split("-")[1].length===2){
+        if (userMessage.split("-").length === 2 && userMessage.split("-")[0].length === 2 && userMessage.split("-")[1].length === 2) {
 
             conversation.date = userMessage
             await nodePersist.updateItem(key, conversation)
@@ -65,15 +65,15 @@ export const processMessage = async (text: string, num: number, conversation: tu
         }
 
 
-    } else if (conversation.date!== "" && conversation.place === "") {
-        
-        const place:any = userMessage
-        if(place==="terminal unam"||place==="shopping posadas"||place==="obera bicentenario"){
+    } else if (conversation.date !== "" && conversation.place === "") {
+
+        const place: any = userMessage
+        if (place === "terminal unam" || place === "shopping posadas" || place === "obera bicentenario") {
 
             conversation.place = place
             await nodePersist.updateItem(key, conversation)
             console.log(conversation);
-            sendToUser(JSON.stringify(hourModel(num, conversation)))
+            sendToUser(JSON.stringify(momentModel(num)))
         } else {
             const errorMessage: comunMessage = {
                 "messaging_product": "whatsapp",
@@ -85,21 +85,27 @@ export const processMessage = async (text: string, num: number, conversation: tu
         }
 
     } else if (conversation.place !== "" && conversation.hour === "") {
-        
-        const hora = userMessage.split(":")
-        if(hora.length===2, hora[0].length===2, hora[1].length===4){
-            conversation.hour = userMessage
-            await nodePersist.updateItem(key, conversation)
-            console.log(conversation);
-            sendToUser(JSON.stringify(welcomeModel(num)))
-        } else {
-            const errorMessage: comunMessage = {
-                "messaging_product": "whatsapp",
-                "text": { "body": "Hora invalida" },
-                "type": "text",
-                "to": num.toString()
+
+        if (userMessage !== "mañana" && userMessage !== "tarde") {
+
+            const hora = userMessage.split(":")
+            if (hora.length === 2, hora[0].length === 2, hora[1].length === 4) {
+                conversation.hour = userMessage
+                await nodePersist.updateItem(key, conversation)
+                console.log(conversation);
+                sendToUser(JSON.stringify(welcomeModel(num)))
+            } else {
+                const errorMessage: comunMessage = {
+                    "messaging_product": "whatsapp",
+                    "text": { "body": "Hora invalida" },
+                    "type": "text",
+                    "to": num.toString()
+                }
+                sendToUser(JSON.stringify(errorMessage))
             }
-            sendToUser(JSON.stringify(errorMessage))
+
+        } else{
+            sendToUser(JSON.stringify(hourModel(num, conversation, userMessage)))
         }
 
     } else {
