@@ -50,12 +50,11 @@ export const datesModels = (num: number) => {
         const date = dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         const day = new Date(date).getDay()
         if(day!==6){
-            const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[day].day} ${date.slice(8)}` }
-            console.log(option);
-            
+            const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[Math.abs((day-1)%7)].day} ${date.slice(8)}` }
             listDate.interactive.action.sections[0].rows.push(option)
         }
     }
+    console.log(listDate);
     
     return listDate
 }

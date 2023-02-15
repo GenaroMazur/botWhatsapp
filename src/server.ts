@@ -37,7 +37,6 @@ export class SERVER {
             mongoosedb(urlDb)
             
             this.app.locals.config = await ConfigBot.find()
-            console.log(this.app.locals.config)
             await nodePersist.init({
                 "dir":__dirname+"./../conversations",
                 "expiredInterval":60000*60*2,
