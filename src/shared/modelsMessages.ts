@@ -133,10 +133,17 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
     }
     let hours:Array<{ "id":string, "title":string, "description":string }> = []
     const place = config.find(place=>place.place===conversation.place)
+    console.log(place);
+    
     const numDay = (new Date(`${new Date().getFullYear()}-${conversation.date}`).getDay())
+    console.log(numDay);
+    
     const turnPlace = place?.days[numDay].turn[turn]
+    console.log(turnPlace);
+    
     const openHour = parseInt(turnPlace?.open.split(":")[0]||"0")
     const closeHour = parseInt(turnPlace?.close.split(":")[0]||"0")
+    console.log("abre:",openHour,", cierra:",closeHour);
     
     for(let x = openHour; x<closeHour; x++){
         if( x===openHour && turnPlace?.open.split(":")[1]!=="00"){
