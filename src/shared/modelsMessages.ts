@@ -46,14 +46,14 @@ export const datesModels = (num: number) => {
         }
     }
     
-    for(let x = 1; x<11; x++){
+    for(let x = 0; x<10; x++){
         const date = dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         const day = new Date(date).getDay()
         console.log(day);
         if(day!==6){
             console.log(config[0].days[day].day);
             console.log(config[0].days[new Date(date).getUTCDay()].day);
-            const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[Math.abs(day)].day} ${date.slice(8)}` }
+            const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[day].day} ${date.slice(8)}` }
             listDate.interactive.action.sections[0].rows.push(option)
         }
     }
