@@ -16,7 +16,15 @@ export const turnsList = catchAsync(async (req: Request, res: Response, next: Ne
                         $map: {
                             input: '$turns',
                             as: 'turn',
-                            in: { _id: '$$turn.hour', reserved: { $isFalse: ['$$i.reserved', '$$REMOVE'] } },
+                            in: {
+                                _id: '$$turn.hour', reserved: {
+                                    "$cond": [
+                                        { "$eq": ["$private", true] },
+                                        "$$REMOVE",
+                                        "$email"
+                                    ]
+                                }
+                            },
                         }
                     }
                 }
