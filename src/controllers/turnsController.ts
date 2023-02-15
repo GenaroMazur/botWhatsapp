@@ -4,51 +4,64 @@ import { catchAsync } from "../helpers/catchAsync";
 import { endpointResponse } from "../helpers/succes";
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper";
 
-export const turnsList = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
+export const turnsList = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        let date:any = dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
-        req.query.date!==undefined?date=req.query.date:"";
-        
-        const turns = await Turn.find({"turns.$.reserved":true})
-        endpointResponse({res, code:200, message:"Lista de turnos", "body":turns})
-    } catch (error:any) {
+        let date: any = dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
+        req.query.date !== undefined ? date = req.query.date : "";
+
+        const turns = await Turn.aggregate([
+            {
+                $addFields: {
+                    turns: {
+                        $map: {
+                            input: '$turns',
+                            as: 'turn',
+                            in: { _id: '$$turn.hour', reserved: { $isFalse: ['$$i.reserved', '$$REMOVE'] } },
+                        }
+                    }
+                }
+            }
+        ])
+
+        endpointResponse({ res, code: 200, message: "Lista de turnos", "body": turns })
+    } catch (error: any) {
         console.log(error);
-        return endpointResponse({res, code:500, message:"OPSS"})
+        return endpointResponse({ res, code: 500, message: "OPSS" })
     }
 })
 
-export const createTurns = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
+export const createTurns = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        
-    } catch (error:any) {
+
+    } catch (error: any) {
         console.log(error);
-        return endpointResponse({res, code:500, message:"OPSS"})
+        return endpointResponse({ res, code: 500, message: "OPSS" })
     }
 })
 
-export const turnDetail = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
+export const turnDetail = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        
-    } catch (error:any) {
+
+    } catch (error: any) {
         console.log(error);
-        return endpointResponse({res, code:500, message:"OPSS"})
+        return endpointResponse({ res, code: 500, message: "OPSS" })
     }
 })
 
-export const updateTurn = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
+export const updateTurn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        
-    } catch (error:any) {
+
+    } catch (error: any) {
         console.log(error);
-        return endpointResponse({res, code:500, message:"OPSS"})
+        return endpointResponse({ res, code: 500, message: "OPSS" })
     }
 })
 
-export const deleteTurn = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
+export const deleteTurn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
-        
-    } catch (error:any) {
+
+    } catch (error: any) {
         console.log(error);
-        return endpointResponse({res, code:500, message:"OPSS"})
+        return endpointResponse({ res, code: 500, message: "OPSS" })
     }
 })
