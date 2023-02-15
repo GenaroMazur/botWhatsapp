@@ -6,7 +6,7 @@ import { dateZoneString, dateNowTimestamp } from "../helpers/helper";
 
 export const turnsList = catchAsync(async (req:Request, res:Response, next:NextFunction) => {
     try {
-        let date:string = dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
+        let date:any = dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         req.query.date!==undefined?date=req.query.date:"";
         const turns = await Turn.find({"turns.reserved":true, date})
         endpointResponse({res, code:200, message:"Lista de turnos", "body":turns})
