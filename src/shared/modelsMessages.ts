@@ -48,13 +48,8 @@ export const datesModels = (num: number) => {
     
     for(let x = 1; x<10; x++){
         const date = dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
-        const day = new Date(date).getDay()
-        const dayUtc = new Date(date).getUTCDay()
-        console.log(day);
-        console.log(dayUtc);
+        const day = (new Date(date).getDay())
         if(day!==6){
-            console.log(config[0].days[day].day);
-            console.log(config[0].days[dayUtc].day);
             const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[day].day} ${date.slice(8)}` }
             listDate.interactive.action.sections[0].rows.push(option)
         }
