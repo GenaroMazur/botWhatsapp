@@ -44,7 +44,6 @@ export const processMessage = async (text: string, num: number, conversation: tu
                 "to": num.toString()
             }
             sendToUser(JSON.stringify(errorMessage))
-            sendToUser(JSON.stringify(datesModels(num)))
         }
 
     } else if (conversation.document !== "" && conversation.date === "") {
