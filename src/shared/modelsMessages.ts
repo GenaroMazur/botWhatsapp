@@ -133,7 +133,8 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
     }
     let hours:Array<{ "id":string, "title":string, "description":string }> = []
     const place = config.find(place=>place.place===conversation.place)
-    console.log(place);
+    console.log(place?.days[4].turn);
+    console.log(place?.days[4].turn["mañana"]);
     
     const numDay = (new Date(`${new Date().getFullYear()}-${conversation.date}`).getDay())
     console.log(numDay);
