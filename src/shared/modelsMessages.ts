@@ -79,7 +79,7 @@ export const placeModels = (num: number) => {
             }
         }
     }
-    config.forEach(place=>{
+    config.forEach((place:any)=>{
         listPlace.interactive.action.sections[0].rows.push({"id":place.place, "title":place.place, "description":place.description})
     })
     return listPlace
