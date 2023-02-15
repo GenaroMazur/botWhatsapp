@@ -9,27 +9,7 @@ export const turnsList = catchAsync(async (req: Request, res: Response, next: Ne
         let date: any = dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         req.query.date !== undefined ? date = req.query.date : "";
 
-        const turns = await Turn.aggregate([
-            {
-                $addFields: {
-                    turns: {
-                        $map: {
-                            input: '$turns',
-                            as: 'turn',
-                            in: {
-                                _id: '$$turn.hour', reserved: {
-                                    "$cond": [
-                                        { "$eq": ["$$turn.reserved", false] },
-                                        "$$REMOVE",
-                                        "$reserved"
-                                    ]
-                                }
-                            },
-                        }
-                    }
-                }
-            }
-        ])
+        const turns = (await Turn.findOne({date,"turns.reserved":true}))?.turns.filter(turn=>turn.reserved)
 
         endpointResponse({ res, code: 200, message: "Lista de turnos", "body": turns })
     } catch (error: any) {
