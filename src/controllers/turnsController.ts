@@ -8,6 +8,8 @@ export const turnsList = catchAsync(async (req:Request, res:Response, next:NextF
     try {
         let date:any = dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         req.query.date!==undefined?date=req.query.date:"";
+        console.log(date);
+        
         const turns = await Turn.find({"turns.reserved":true, date})
         endpointResponse({res, code:200, message:"Lista de turnos", "body":turns})
     } catch (error:any) {
