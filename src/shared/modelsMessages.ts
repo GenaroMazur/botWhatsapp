@@ -54,12 +54,11 @@ export const datesModels = (num: number) => {
             listDate.interactive.action.sections[0].rows.push(option)
         }
     }
-    console.log(listDate.interactive.action.sections[0]);
-    
     return listDate
 }
 
 export const placeModels = (num: number) => {
+    const config = server.app.locals.config
     let listPlace: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -80,6 +79,9 @@ export const placeModels = (num: number) => {
             }
         }
     }
+    config.forEach(place=>{
+        listPlace.interactive.action.sections[0].rows.push({"id":place.place, "title":place.place, "description":place.description})
+    })
     return listPlace
 }
 
@@ -129,45 +131,8 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
             }
         }
     }
-    if (conversation.place === "shopping posadas") {
-        if (turn === "mañana") {
-            hours.push("09:00hs")
-            for (let x = 10; x < 13; x++) {
-                hours.push(`${x}:00hs`)
-            }
-        } else {
-            for (let x = 12; x < 21; x++) {
-                hours.push(`${x}:00hs`)
-            }
-        }
-    } else if (conversation.place === "terminal unam") {
-        if (turn === "mañana") {
-            hours.push("08:30hs")
-            hours.push("09:00hs")
-            for (let x = 10; x < 13; x++) {
-                hours.push(`${x}:00hs`)
-            }
-        } else {
-            for (let x = 14; x < 17; x++) {
-                hours.push(`${x}:00hs`)
-            }
+    
 
-        }
-    } else {
-        if(turn !== "tarde"){
-            hours.push("09:00hs")
-            for (let x = 10; x < 13; x++) {
-                hours.push(`${x}:00hs`)
-            }
-        } else {
-            for (let x = 13; x < 21; x++) {
-                hours.push(`${x}:00hs`)
-            }
-        }
-    }
-
-    hours.map((hour, index) => {
-        listHours.interactive.action.sections[0].rows.push({ "id": `${index}`, "title": hour, "description": turn })
-    })
+    
     return listHours
 }
