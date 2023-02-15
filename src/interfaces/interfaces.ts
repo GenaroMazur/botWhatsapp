@@ -119,7 +119,7 @@ export interface configInterface {
     "place":string,
     "days":Array<{
         "day":"lunes"|"martes"|"miercoles"|"jueves"|"viernes"|"sabado",
-        "turn":{
+        "turn":[{
             "mañana":{
                 "boxxes":string,
                 "open":string,
@@ -130,7 +130,7 @@ export interface configInterface {
                 "open":string,
                 "close":string
             }
-        }
+        }]
     }>,
     "description":string
 }
