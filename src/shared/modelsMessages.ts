@@ -146,12 +146,12 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
     const closeHour = parseInt(turnPlace?.close.split(":")[0]||"0")
     console.log("abre:",openHour,", cierra:",closeHour);
     
-    for(let x = openHour; x<closeHour; x=x+2){
+    for(let x = openHour; x<closeHour; x++){
         if( x===openHour && turnPlace?.open.split(":")[1]!=="00"){
-            hours.push({"id":`${x}`, "title":`${openHour}-${turnPlace?.open.split(":")[1]}hs`, "description":`turno ${turn}`})
+            hours.push({"id":`${x}`, "title":`${openHour}:${turnPlace?.open.split(":")[1]}hs`, "description":`turno ${turn}`})
         } else {
-            for(let y = 0; y <= 4; y++){
-                hours.push({"id":`${x}`, "title":`${x}-${y}0hs`, "description":`turno ${turn}`})
+            for(let y = 0; y <= 4; y=y+2){
+                hours.push({"id":`${x}`, "title":`${x}:${y}0hs`, "description":`turno ${turn}`})
             }
         }
     }
