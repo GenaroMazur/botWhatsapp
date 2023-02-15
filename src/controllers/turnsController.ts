@@ -10,7 +10,7 @@ export const turnsList = catchAsync(async (req:Request, res:Response, next:NextF
         req.query.date!==undefined?date=req.query.date:"";
         console.log(date);
         
-        const turns = await Turn.find({"turns.reserved":true})
+        const turns = await Turn.find({date}).find({"turns.reserved":true})
         endpointResponse({res, code:200, message:"Lista de turnos", "body":turns})
     } catch (error:any) {
         console.log(error);
