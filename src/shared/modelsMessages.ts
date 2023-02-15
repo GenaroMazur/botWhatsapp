@@ -133,25 +133,20 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
     }
     let hours:Array<{ "id":string, "title":string, "description":string }> = []
     const place = config.find(place=>place.place===conversation.place)
-    console.log(place?.days[4].turn);
-    console.log(place?.days[4].turn[0]["mañana"]);
     
     const numDay = (new Date(`${new Date().getFullYear()}-${conversation.date}`).getDay())
-    console.log(numDay);
     
     const turnPlace = place?.days[numDay].turn[0][turn]
-    console.log(turnPlace);
     
     const openHour = parseInt(turnPlace?.open.split(":")[0]||"0")
     const closeHour = parseInt(turnPlace?.close.split(":")[0]||"0")
-    console.log("abre:",openHour,", cierra:",closeHour);
     
     for(let x = openHour; x<closeHour; x++){
         if( x===openHour && turnPlace?.open.split(":")[1]!=="00"){
             hours.push({"id":`${x}`, "title":`${openHour}:${turnPlace?.open.split(":")[1]}hs`, "description":`turno ${turn}`})
         } else {
             for(let y = 0; y <= 4; y=y+2){
-                hours.push({"id":`${x}`, "title":`${x}:${y}0hs`, "description":`turno ${turn}`})
+                hours.push({"id":`${x}:${y}0hs`, "title":`${x}:${y}0hs`, "description":`turno ${turn}`})
             }
         }
     }
