@@ -1,4 +1,4 @@
-import { list, turnInterface } from "../interfaces/interfaces"
+import { configInterface, list, turnInterface } from "../interfaces/interfaces"
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper"
 import { SERVER } from "../server"
 const server = SERVER.instance
@@ -24,7 +24,7 @@ export const dniModel = (num: number) => {
 }
 
 export const datesModels = (num: number) => {
-    const config = server.app.locals.config
+    const config:Array<configInterface> = server.app.locals.config
     let listDate: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -58,7 +58,7 @@ export const datesModels = (num: number) => {
 }
 
 export const placeModels = (num: number) => {
-    const config = server.app.locals.config
+    const config:Array<configInterface> = server.app.locals.config
     let listPlace: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -79,7 +79,7 @@ export const placeModels = (num: number) => {
             }
         }
     }
-    config.forEach((place:any)=>{
+    config.forEach(place=>{
         listPlace.interactive.action.sections[0].rows.push({"id":place.place, "title":place.place, "description":place.description})
     })
     return listPlace
