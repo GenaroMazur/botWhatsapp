@@ -1,10 +1,9 @@
 import { list, turnInterface } from "../interfaces/interfaces"
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper"
 import { SERVER } from "../server"
-const config = SERVER.instance.app.locals.config
+const server = SERVER.instance
 const welcomeMessage = "*¡Bienvenido a Servicios Urbanos S.A!*\n\nPara sacar turno para reclamos ingresar los siguientes datos.\nSu nombre y apellido completos. \n\nPor favor para otros tipos de consultas comunicarse al 0810-444-7823."
 const dniMessage = "Ahora Debe ingresar su numero de documento *sin puntos ni comas*.\n Por ejemplo: 44736152"
-console.log(config)
 export const welcomeModel = (num: number) => {
 
     return {
@@ -25,6 +24,9 @@ export const dniModel = (num: number) => {
 }
 
 export const datesModels = (num: number) => {
+    const config = server.app.locals.config
+    console.log(config);
+    
     let listDate: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
