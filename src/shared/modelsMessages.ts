@@ -24,7 +24,6 @@ export const dniModel = (num: number) => {
     }
 }
 
-let turnsDays: Array<string> = []
 export const datesModels = (num: number) => {
     let listDate: list = {
         "messaging_product": "whatsapp",
@@ -47,15 +46,18 @@ export const datesModels = (num: number) => {
         }
     }
 
-    for(let x = 0; x<14; x++){
-        const date = dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
+    for(let x = 1; x<14; x++){
+        const date = dateZoneString(dateNowTimestamp()*60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         const day = new Date(date).getDay()
         if(day!==6){
             const option = { "id": date.slice(5), "title": date.slice(5), "description": `dia ${config[0].days[day].day} ${date.slice(8)}` }
+            console.log(option);
+            
             listDate.interactive.action.sections[0].rows.push(option)
         }
     }
-
+    console.log(listDate.interactive.action.sections[0]);
+    
     return listDate
 }
 
