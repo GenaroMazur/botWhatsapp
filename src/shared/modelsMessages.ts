@@ -54,7 +54,7 @@ export const datesModels = (num: number) => {
             listDate.interactive.action.sections[0].rows.push(option)
         }
     }
-    console.log(listDate);
+    console.log(listDate.interactive.action.sections[0]);
     
     return listDate
 }
