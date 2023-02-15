@@ -34,9 +34,9 @@ export class SERVER {
             this.app.use(express.json())
             this.app.use(express.urlencoded({ extended: true }))
             this.app.use(cors())
-            this.app.locals.config = await ConfigBot.find()
-
             mongoosedb(urlDb)
+            
+            this.app.locals.config = await ConfigBot.find()
             await nodePersist.init({
                 "dir":__dirname+"./../conversations",
                 "expiredInterval":60000*60*2,
