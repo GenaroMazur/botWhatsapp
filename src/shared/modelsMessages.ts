@@ -146,7 +146,7 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
     const closeHour = parseInt(turnPlace?.close.split(":")[0]||"0")
     console.log("abre:",openHour,", cierra:",closeHour);
     
-    for(let x = openHour; x<closeHour; x++){
+    for(let x = openHour; x<closeHour; x=x+2){
         if( x===openHour && turnPlace?.open.split(":")[1]!=="00"){
             hours.push({"id":`${x}`, "title":`${openHour}-${turnPlace?.open.split(":")[1]}hs`, "description":`turno ${turn}`})
         } else {
@@ -156,7 +156,7 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
         }
     }
 
-    hours.length>10?hours.length=9:""
+    hours.length>=10?hours.length=8:""
     listHours.interactive.action.sections[0].rows=hours
     console.log(listHours.interactive.action.sections[0]);
     
