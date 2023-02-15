@@ -38,7 +38,7 @@ export const datesModels = (num: number) => {
                     {
                         "title": "",
                         "rows": [
-                            ///AQUI VAN LAS FECHAS
+                            
                         ]
                     }
                 ]
@@ -46,11 +46,11 @@ export const datesModels = (num: number) => {
         }
     }
     
-    for(let x = 1; x<14; x++){
+    for(let x = 1; x<11; x++){
         const date = dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         const day = new Date(date).getDay()
         if(day!==6){
-            const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[Math.abs((day-1)%7)].day} ${date.slice(8)}` }
+            const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[Math.abs(day-1)].day} ${date.slice(8)}` }
             listDate.interactive.action.sections[0].rows.push(option)
         }
     }
