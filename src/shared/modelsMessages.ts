@@ -148,7 +148,7 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
         }
     }
 
-    hours.length>10?hours.length=10:""
+    hours.length>10?hours.length=9:""
     listHours.interactive.action.sections[0].rows=hours
     return listHours
 }
