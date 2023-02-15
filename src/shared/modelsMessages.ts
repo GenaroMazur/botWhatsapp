@@ -110,7 +110,7 @@ export const momentModel = (num: number) => {
 }
 
 export const hourModel = (num: number, conversation: turnInterface, turn: "mañana" | "tarde") => {
-    let hours: Array<string> = []
+    const config:Array<configInterface> = server.app.locals.config
     let listHours: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -124,15 +124,31 @@ export const hourModel = (num: number, conversation: turnInterface, turn: "maña
                     {
                         "title": "",
                         "rows": [
-                            //Aqui iran las horas
+                            
                         ]
                     }
                 ]
             }
         }
     }
+    let hours:Array<{ "id":string, "title":string, "description":string }> = []
+    const place = config.find(place=>place.place===conversation.place)
+    const numDay = (new Date(`${new Date().getFullYear()}-${conversation.date}`).getDay())
+    const turnPlace = place?.days[numDay].turn[turn]
+    const openHour = parseInt(turnPlace?.open.split(":")[0]||"0")
+    const closeHour = parseInt(turnPlace?.close.split(":")[0]||"0")
     
+    for(let x = openHour; x<closeHour; x++){
+        if( x===openHour && turnPlace?.open.split(":")[1]!=="00"){
+            hours.push({"id":`${x}`, "title":`${openHour}-${turnPlace?.open.split(":")[1]}hs`, "description":`turno ${turn}`})
+        } else {
+            for(let y = 0; y <= 4; y++){
+                hours.push({"id":`${x}`, "title":`${x}-${y}0hs`, "description":`turno ${turn}`})
+            }
+        }
+    }
 
-    
+    hours.length>10?hours.length=10:""
+    listHours.interactive.action.sections[0].rows=hours
     return listHours
 }
