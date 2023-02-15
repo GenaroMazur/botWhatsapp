@@ -47,7 +47,7 @@ export const datesModels = (num: number) => {
     }
     
     for(let x = 1; x<14; x++){
-        const date = dateZoneString(dateNowTimestamp()*60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
+        const date = dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         const day = new Date(date).getDay()
         console.log(date, day);
         if(day!==6){
