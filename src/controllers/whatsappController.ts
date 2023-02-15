@@ -29,7 +29,7 @@ export const receiveMessage =async (req:Request, res:Response, next:NextFunction
         console.log(error)
         res.status(200).send("EVENT_RECEIVED")
     }
-
+    
 }
 
 export const sendMessage =async (req:Request, res:Response) => {
