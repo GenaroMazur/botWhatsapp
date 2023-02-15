@@ -12,10 +12,6 @@ const turnoSchema = new Schema(
             trim: true,
             default: ""
         },
-        reserved: {
-            type: Boolean,
-            default: false
-        },
         hour: {
             type: String,
             trim: true,

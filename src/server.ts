@@ -3,6 +3,7 @@ import {Server} from "http"
 import cors from "cors"
 import nodePersist from "node-persist"
 import { mongoosedb } from "./database/mongoose"
+import { ConfigBot } from "./database/models/Config"
 
 require("dotenv").config()
 
@@ -20,7 +21,6 @@ export class SERVER {
     }
 
     public init(): SERVER { return new SERVER() }
-
     public async start():Promise<void|unknown> {
         try {
             const port = process.env.PORT
@@ -34,6 +34,8 @@ export class SERVER {
             this.app.use(express.json())
             this.app.use(express.urlencoded({ extended: true }))
             this.app.use(cors())
+            this.app.locals.config = await ConfigBot.find()
+
             mongoosedb(urlDb)
             await nodePersist.init({
                 "dir":__dirname+"./../conversations",

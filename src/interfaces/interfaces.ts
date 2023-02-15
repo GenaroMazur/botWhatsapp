@@ -114,3 +114,23 @@ export interface sendToWhastapp {
     body: string
 
 }
+
+export interface configInterface {
+    "place":string,
+    "days":Array<{
+        "day":"lunes"|"martes"|"miercoles"|"jueves"|"viernes"|"sabado",
+        "turn":{
+            "mañana":{
+                "boxxes":string,
+                "open":string,
+                "close":string
+            },
+            "tarde":{
+                "boxxes":string,
+                "open":string,
+                "close":string
+            }
+        }
+    }>,
+    "description":string
+}
