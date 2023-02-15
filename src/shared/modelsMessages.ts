@@ -25,8 +25,6 @@ export const dniModel = (num: number) => {
 
 export const datesModels = (num: number) => {
     const config = server.app.locals.config
-    console.log(config);
-    
     let listDate: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -48,12 +46,12 @@ export const datesModels = (num: number) => {
         }
     }
     
-    
     for(let x = 1; x<14; x++){
         const date = dateZoneString(dateNowTimestamp()*60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         const day = new Date(date).getDay()
+        console.log(date, day);
         if(day!==6){
-            const option = { "id": date.slice(5), "title": date.slice(5), "description": `dia ${config[0].days[day].day} ${date.slice(8)}` }
+            const option = { "id": date.slice(5), "title": date.slice(5), "description": `dia ${date.slice(8)}` }
             console.log(option);
             
             listDate.interactive.action.sections[0].rows.push(option)
