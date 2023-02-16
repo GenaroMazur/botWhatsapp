@@ -38,7 +38,8 @@ export const createTurns = catchAsync(async (req: Request, res: Response, next: 
                 "end": req.body.morning.end
             }
         }
-        console.log(creation);
+        console.log(creation.morning.boxxes);
+        console.log(creation.morning.end);
         
         generateTurns(creation)
         endpointResponse({res,"message":"¡ Turnos generados !", code:201})
