@@ -84,11 +84,12 @@ export const placeModels = async (num: number) => {
     //     listPlace.interactive.action.sections[0].rows.push({"id":place.place, "title":place.place, "description":place.description})
     // })
 
-    let places:any = await Turn.find()
-    places = places.reduce((turnoAnterior:Array<any>, turnoActual:any)=>{
+    let places:Array<any> = await Turn.find()
+    places = places.reduce((acumulador:Array<any>, turnoActual:any)=>{
+        console.log(acumulador);
         
-            if(!turnoAnterior.includes(turnoActual.place)){
-                turnoAnterior.push(turnoActual.place)
+            if(!acumulador.includes(turnoActual.place)){
+                acumulador.push(turnoActual.place)
             }
         
     },[])
