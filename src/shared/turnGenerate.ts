@@ -35,11 +35,10 @@ export const generateTurns = async (creation: creationForm) => {
         console.log("bucle dia num:",x);
         
         let openTurns: Array<turnInterface> = []
-        console.log(daysOfWeek);
-        console.log(date.getDay());
-        console.log(creation.daysOfWeek);
+        console.log(new Date().getFullYear(),creation.dateStart);
         
-        console.log(creation.daysOfWeek.includes(daysOfWeek[date.getDay()]));
+        console.log(date)
+        console.log(date.getDay());
         
         if (creation.daysOfWeek.includes(daysOfWeek[date.getDay()])) {
             
