@@ -11,7 +11,6 @@ const turnsSchema = new Schema({
 
 const turnoSchema = new Schema({
     date:{type:String,required:true},
-    boxxes:{type:Number,required:true},
     day:{type:String,required:true},
     place:{type:String,required:true},
     turns:{type:[turnsSchema],required:true}
