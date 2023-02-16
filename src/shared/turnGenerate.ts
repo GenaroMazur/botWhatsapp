@@ -50,9 +50,9 @@ export const generateTurns = async (creation: creationForm) => {
             for (let y = openHourMorning; y < closeHourMorning; y++) {
                 let minutes = y === openHourMorning ? parseInt(turn.hour.substring(3, 5)) : 0
 
-                while (minutes < 60 && minutes + 6 - morningBoxxes < 60) {
+                while (minutes < 60 && minutes + 5 - morningBoxxes < 60) {
                     
-                    minutes += (6 - morningBoxxes)
+                    minutes += (5 - morningBoxxes)
                     let turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"mañana")
                     openTurns.push(turn)
                 }
