@@ -52,7 +52,7 @@ export const turnDetail = catchAsync(async (req: Request, res: Response, next: N
     try {
         const turnId = req.params.turnId
         const turn = await Turn.findOne({"turns._id":turnId},{"turns:$":1})
-        endpointResponse({res, code:turn!==null?200:204, message:`¡ Turno !`,})
+        endpointResponse({res, code:turn!==null?200:204, message:`¡ Turno !`,body:turn})
     } catch (error: any) {
         console.log(error);
         return endpointResponse({ res, code: 500, message: "OPSS" })
