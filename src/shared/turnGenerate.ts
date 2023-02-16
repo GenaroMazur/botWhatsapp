@@ -29,11 +29,8 @@ export const generateTurns = async (creation: creationForm) => {
     await NodePersist.setItem("openTurns", [])
     
     console.log("crear archivo persistente");
-    console.log(daysDiff);
     
     for (let x = 1; x <= daysDiff; x++) {
-        console.log("bucle dia num:",x);
-        
         let openTurns: Array<turnInterface> = []
         
         
@@ -42,18 +39,20 @@ export const generateTurns = async (creation: creationForm) => {
             turn.turn = "mañana"
             turn.hour = `${openHourMorning}:${openMinutesMorning}hs`
             openTurns.push(turn)
+            console.log(turn);
             
             for (let y = openHourMorning; y < closeHourMorning; y++) {
-                console.log("bucle hora",y,"mañana num:",x);
                 let minutes = y === openHourMorning ? parseInt(turn.hour.substring(3, 5)) : 0
 
                 while (minutes < 60 && minutes + 6 - morningBoxxes < 60) {
                     
                     minutes += (6 - morningBoxxes)
                     turn.hour = `${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`
-                    console.log(turn.hour);
+                    console.log(turn);
                     openTurns.push(turn)
                 }
+                console.log(openTurns);
+                
             }
 
 
@@ -77,7 +76,7 @@ export const generateTurns = async (creation: creationForm) => {
                 "turns": openTurns,
                 "day": daysOfWeek[date.getDay()]
             }
-            console.log(openTurns)
+            
             await NodePersist.updateItem("openTurns", [... await NodePersist.getItem("openTurns"), dayTurn])
         }
         date.setDate(date.getDate() + 1)
