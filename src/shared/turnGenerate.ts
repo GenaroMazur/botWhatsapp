@@ -71,8 +71,10 @@ export const generateTurns = async (creation: creationForm) => {
                     openTurns.push(turn)
                 }
             }
+            const month = date.getUTCMonth()+1
+            const day = date.getUTCDate()
             const dayTurn = {
-                "date": `${date.getFullYear()}-${date.getUTCMonth()}-${date.getUTCDate()}`,
+                "date": `${date.getFullYear()}-${month<10?`0${month}`:month}-${day<10?`0${day}`:day}`,
                 "place": creation.place,
                 "turns": openTurns,
                 "day": daysOfWeek[date.getDay()]
@@ -84,4 +86,4 @@ export const generateTurns = async (creation: creationForm) => {
     }
     Turn.insertMany(await NodePersist.getItem("openTurns"))
     console.log("turnos creados !");
-}
+} 
