@@ -6,13 +6,13 @@ const daysOfWeek: Array<("domingo" | "lunes" | "martes" | "miercoles" | "jueves"
 export const generateTurns = async (creation: creationForm) => {
     const daysDiff = ( new Date(creation.dateEnd).getTime() - new Date(creation.dateStart).getTime()) / (1000 * 60 * 60 * 24)
     
-    const openHourMorning = parseInt(creation.morning.start.substring(0, 2))
-    const closeHourMorning = parseInt(creation.morning.end.substring(0, 2))
-    const openMinutesMorning = creation.morning.start.substring(3, 5)
+    const openHourMorning = parseInt(creation.morning.start.split(":")[0])
+    const closeHourMorning = parseInt(creation.morning.end.split(":")[0])
+    const openMinutesMorning = creation.morning.start.split(":")[1].substring(0, 2)
 
-    const openHourEvening = parseInt(creation.evening.start.substring(0, 2))
-    const closeHourEvening = parseInt(creation.evening.end.substring(0, 2))
-    const openMinutesEvening = creation.evening.start.substring(3, 5)
+    const openHourEvening = parseInt(creation.evening.start.split(":")[0])
+    const closeHourEvening = parseInt(creation.evening.end.split(":")[0])
+    const openMinutesEvening = creation.evening.start.split(":")[1].substring(0, 2)
     console.log("inicializar horas");
     
     class turnClass {
@@ -59,7 +59,6 @@ export const generateTurns = async (creation: creationForm) => {
                 
             }
 
-
             turn = new turnClass(`${openHourEvening}:${openMinutesEvening}hs`,"tarde")
             openTurns.push(turn)
             
@@ -68,7 +67,7 @@ export const generateTurns = async (creation: creationForm) => {
 
                 while (minutes < 60 || minutes + 6 - eveningBoxxes < 60) {
                     minutes += (6 - eveningBoxxes)
-                    turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"mañana")
+                    turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"tarde")
                     openTurns.push(turn)
                 }
             }
