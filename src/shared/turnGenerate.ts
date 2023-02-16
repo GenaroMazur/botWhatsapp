@@ -35,10 +35,7 @@ export const generateTurns = async (creation: creationForm) => {
         console.log("bucle dia num:",x);
         
         let openTurns: Array<turnInterface> = []
-        console.log(new Date().getFullYear(),creation.dateStart);
         
-        console.log(date)
-        console.log(date.getDay());
         
         if (creation.daysOfWeek.includes(daysOfWeek[date.getDay()])) {
             
@@ -80,6 +77,7 @@ export const generateTurns = async (creation: creationForm) => {
                 "turns": openTurns,
                 "day": daysOfWeek[date.getDay()]
             }
+            console.log(openTurns)
             await NodePersist.updateItem("openTurns", [... await NodePersist.getItem("openTurns"), dayTurn])
         }
         date.setDate(date.getDate() + 1)
