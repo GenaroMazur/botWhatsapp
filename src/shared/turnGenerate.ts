@@ -48,10 +48,10 @@ export const generateTurns = async (creation: creationForm) => {
                 let minutes = y === openHourMorning ? parseInt(turn.hour.substring(3, 5)) : 0
 
                 while (minutes < 60 && minutes + 6 - morningBoxxes < 60) {
-                    console.log("bucle hora",y,"mañana, minuto",minutes);
                     
                     minutes += (6 - morningBoxxes)
                     turn.hour = `${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`
+                    console.log(turn.hour);
                     openTurns.push(turn)
                 }
             }
