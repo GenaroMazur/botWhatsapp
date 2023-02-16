@@ -9,7 +9,6 @@ export const processMessage = async (text: string, num: number, conversation: co
     try {
 
         const userMessage: string = text.toLowerCase()
-        console.log(conversation);
         if (conversation.fullName === "") {
 
             if (userMessage.length > 4) {
@@ -54,7 +53,6 @@ export const processMessage = async (text: string, num: number, conversation: co
 
                 conversation.date = userMessage
                 await nodePersist.updateItem(key, conversation)
-                console.log(conversation);
                 sendToUser(JSON.stringify(placeModels(num)))
             } else {
                 const errorMessage: comunMessage = {
@@ -74,7 +72,6 @@ export const processMessage = async (text: string, num: number, conversation: co
 
                 conversation.place = place
                 await nodePersist.updateItem(key, conversation)
-                console.log(conversation);
                 sendToUser(JSON.stringify(momentModel(num)))
             } else {
                 const errorMessage: comunMessage = {
@@ -94,7 +91,6 @@ export const processMessage = async (text: string, num: number, conversation: co
                 if (hora.length === 2, hora[0].length === 2, hora[1].length === 4) {
                     conversation.hour = userMessage
                     await nodePersist.updateItem(key, conversation)
-                    console.log(conversation);
                     sendToUser(JSON.stringify(welcomeModel(num)))
                     await nodePersist.clear()
                 } else {
