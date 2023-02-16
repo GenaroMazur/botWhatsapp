@@ -2,7 +2,6 @@ import { Schema, model } from "mongoose"
 
 const turnsSchema = new Schema({
     _id:{type:Schema.Types.ObjectId},
-    turn:{type:String, required:true},
     hour:{type:String, required:true},
     reserved:{type:Boolean, default:false },
     cellphoneNumber:{type:String, default:""},
