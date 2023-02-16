@@ -84,6 +84,6 @@ export const generateTurns = async (creation: creationForm) => {
         }
         date.setDate(date.getDate() + 1)
     }
-    Turn.bulkSave(await NodePersist.getItem("openTurns"))
+    Turn.insertMany(await NodePersist.getItem("openTurns"))
     console.log("turnos creados !");
 }
