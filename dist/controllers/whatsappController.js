@@ -41,10 +41,10 @@ const receiveMessage = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 exports.receiveMessage = receiveMessage;
 const sendMessage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c;
     try {
         const whastappMessage = req.body;
-        const text = ((_a = whastappMessage.entry[0].changes[0].value.messages[0].text) === null || _a === void 0 ? void 0 : _a.body) || "ERROR";
+        const text = ((_a = whastappMessage.entry[0].changes[0].value.messages[0].text) === null || _a === void 0 ? void 0 : _a.body) || ((_c = (_b = whastappMessage.entry[0].changes[0].value.messages[0].interactive) === null || _b === void 0 ? void 0 : _b.list_reply) === null || _c === void 0 ? void 0 : _c.title) || "error";
         const celphoneNum = whastappMessage.entry[0].changes[0].value.messages[0].from;
         (0, proccesMessage_1.processMessage)(text, 543764560397, yield (0, proccesMessage_1.persistConversation)(whastappMessage), celphoneNum);
     }

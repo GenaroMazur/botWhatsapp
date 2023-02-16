@@ -2,10 +2,10 @@ import { sendToUser } from "../service/sendMessajeToNum"
 import { datesModels, dniModel, hourModel, momentModel, placeModels, welcomeModel } from "./modelsMessages"
 import nodePersist from "node-persist"
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
-import { comunMessage, turnInterface } from "../interfaces/interfaces"
+import { comunMessage, conversationInterface, turnInterface } from "../interfaces/interfaces"
 const nums = "0123456789"
 
-export const processMessage = async (text: string, num: number, conversation: turnInterface, key: string) => {
+export const processMessage = async (text: string, num: number, conversation: conversationInterface, key: string) => {
     try {
 
         const userMessage: string = text.toLowerCase()
@@ -127,10 +127,10 @@ export const processMessage = async (text: string, num: number, conversation: tu
     }
 }
 
-export const persistConversation = async (message: whastappObjectResponse) => {
+export const persistConversation = async (message: whastappObjectResponse):Promise<conversationInterface> => {
     const cellphoneNum = message.entry[0].changes[0].value.messages[0].from
-    const conversation: turnInterface = await nodePersist.getItem(cellphoneNum)
-    const turn: turnInterface = { "fullName": null, "document": "", "date": "", "hour": "", "place": "" }
+    const conversation: conversationInterface = await nodePersist.getItem(cellphoneNum)
+    const turn: conversationInterface = { "fullName": null, "document": "", "date": "", "hour": "", "place": "" }
     if (conversation === undefined) {
         await nodePersist.setItem(cellphoneNum, turn)
     }

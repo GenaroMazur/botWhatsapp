@@ -94,12 +94,12 @@ export interface comunMessage {
     }
 }
 
-export interface conversation {
+export interface conversationInterface {
     fullName:string | null,
     document:string,
-    turns:string,
     place:string,
-    date:string
+    date:string,
+    hour:string
 }
 export interface turnDayInterface{
     fullName:string | null,

@@ -17,6 +17,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const node_persist_1 = __importDefault(require("node-persist"));
 const mongoose_1 = require("./database/mongoose");
+const Config_1 = require("./database/models/Config");
 require("dotenv").config();
 class SERVER {
     static get instance() { return this._instance || (this._instance = new this()); }
@@ -39,6 +40,8 @@ class SERVER {
                 this.app.use(express_1.default.urlencoded({ extended: true }));
                 this.app.use((0, cors_1.default)());
                 (0, mongoose_1.mongoosedb)(urlDb);
+                this.app.locals.config = yield Config_1.ConfigBot.find();
+                setInterval(() => __awaiter(this, void 0, void 0, function* () { return this.app.locals.config = yield Config_1.ConfigBot.find(); }), 60000 * 60 * 24);
                 yield node_persist_1.default.init({
                     "dir": __dirname + "./../conversations",
                     "expiredInterval": 60000 * 60 * 2,
