@@ -50,9 +50,9 @@ export const generateTurns = async (creation: creationForm) => {
             for (let y = openHourMorning; y < closeHourMorning; y++) {
                 let minutes = y === openHourMorning ? parseInt(turn.hour.substring(3, 5)) : 0
 
-                while (minutes < 60 && minutes + 5 - morningBoxxes < 60) {
+                while (minutes < 55 && minutes + Math.round(5 / morningBoxxes) < 55) {
                     
-                    minutes += (5 - morningBoxxes)
+                    minutes += Math.round(5 / morningBoxxes)
                     let turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"mañana")
                     openTurns.push(turn)
                 }
@@ -65,8 +65,8 @@ export const generateTurns = async (creation: creationForm) => {
             for (let y = openHourEvening; y < closeHourEvening; y++) {
                 let minutes = y === openHourEvening ? parseInt(turn.hour.substring(3, 5)) : 0
 
-                while (minutes < 60 || minutes + 6 - eveningBoxxes < 60) {
-                    minutes += (6 - eveningBoxxes)
+                while (minutes < 55 || minutes + Math.round(5 / eveningBoxxes) < 55) {
+                    minutes += Math.round(5/eveningBoxxes)
                     turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"tarde")
                     openTurns.push(turn)
                 }
