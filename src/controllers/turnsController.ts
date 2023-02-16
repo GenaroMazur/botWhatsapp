@@ -71,7 +71,7 @@ export const updateTurn = catchAsync(async (req: Request, res: Response, next: N
 export const deleteTurn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const turnId = req.params.turnId
-        const turn = await Turn.find({"turns.turnId":turnId},{"pull":{"turns":{"turnId":turnId}}})
+        const turn = await Turn.findOneAndUpdate({"turns.turnId":turnId},{"pull":{"turns":{"turnId":turnId}}})
         endpointResponse({res, code:turn!==null?200:204, message:`¡ Turno !`,body:turn})
     } catch (error: any) {
         console.log(error);
