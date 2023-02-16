@@ -5,8 +5,6 @@ const daysOfWeek: Array<("domingo" | "lunes" | "martes" | "miercoles" | "jueves"
 
 export const generateTurns = async (creation: creationForm) => {
     const daysDiff = ( new Date(creation.dateEnd).getTime() - new Date(creation.dateStart).getTime()) / (1000 * 60 * 60 * 24)
-    console.log(new Date(creation.dateStart));
-    console.log(new Date(creation.dateEnd));
     
     const openHourMorning = parseInt(creation.morning.start.substring(0, 2))
     const closeHourMorning = parseInt(creation.morning.end.substring(0, 2))
@@ -37,6 +35,12 @@ export const generateTurns = async (creation: creationForm) => {
         console.log("bucle dia num:",x);
         
         let openTurns: Array<turnInterface> = []
+        console.log(daysOfWeek);
+        console.log(date.getDay());
+        console.log(creation.daysOfWeek);
+        
+        console.log(creation.daysOfWeek.includes(daysOfWeek[date.getDay()]));
+        
         if (creation.daysOfWeek.includes(daysOfWeek[date.getDay()])) {
             
             turn.turn = "mañana"
