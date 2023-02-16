@@ -38,6 +38,8 @@ export const createTurns = catchAsync(async (req: Request, res: Response, next: 
                 "end": req.body.morning.end
             }
         }
+        console.log(creation);
+        
         generateTurns(creation)
         endpointResponse({res,"message":"¡ Turnos generados !", code:201})
     } catch (error: any) {
