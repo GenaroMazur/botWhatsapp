@@ -1,6 +1,7 @@
 import { configInterface, conversationInterface, list, turnInterface } from "../interfaces/interfaces"
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper"
 import { SERVER } from "../server"
+import { Turn } from "../database/models/Turn"
 const server = SERVER.instance
 const welcomeMessage = "*¡Bienvenido a Servicios Urbanos S.A!*\n\nPara sacar turno para reclamos ingresar los siguientes datos.\nSu nombre y apellido completos. \n\nPor favor para otros tipos de consultas comunicarse al 0810-444-7823."
 const dniMessage = "Ahora Debe ingresar su numero de documento *sin puntos ni comas*.\n Por ejemplo: 44736152"
@@ -57,7 +58,7 @@ export const datesModels = (num: number) => {
     return listDate
 }
 
-export const placeModels = (num: number) => {
+export const placeModels = async (num: number) => {
     const config:Array<configInterface> = server.app.locals.config
     let listPlace: list = {
         "messaging_product": "whatsapp",
@@ -79,9 +80,23 @@ export const placeModels = (num: number) => {
             }
         }
     }
-    config.forEach(place=>{
-        listPlace.interactive.action.sections[0].rows.push({"id":place.place, "title":place.place, "description":place.description})
+    // config.forEach(place=>{
+    //     listPlace.interactive.action.sections[0].rows.push({"id":place.place, "title":place.place, "description":place.description})
+    // })
+
+    let places:any = await Turn.find()
+    places = places.reduce((turnoAnterior:Array<any>, turnoActual:any)=>{
+        if(turnoAnterior){
+            if(!turnoAnterior.includes(turnoActual.place)){
+                turnoAnterior.push(turnoActual.place)
+            }
+        } else {
+            return []
+        }
     })
+    places.forEach((place:string) => {
+        listPlace.interactive.action.sections[0].rows.push({"id":place,"title":place,"description":""})
+    });
     return listPlace
 }
 
