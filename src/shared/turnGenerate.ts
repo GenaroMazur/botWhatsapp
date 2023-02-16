@@ -4,7 +4,7 @@ import { creationForm, turnDayInterface, turnInterface } from "../interfaces/int
 const daysOfWeek: Array<("domingo" | "lunes" | "martes" | "miercoles" | "jueves" | "viernes" | "sabado")> = ["domingo", "lunes", "martes", "miercoles", "jueves", "viernes", "sabado"]
 
 export const generateTurns = async (creation: creationForm) => {
-    const daysDiff = (new Date(creation.dateStart).getTime() - new Date(creation.dateEnd).getTime()) / (1000 * 60 * 60 * 24)
+    const daysDiff = ( new Date(creation.dateEnd).getTime() - new Date(creation.dateStart).getTime()) / (1000 * 60 * 60 * 24)
     console.log(new Date(creation.dateStart));
     console.log(new Date(creation.dateEnd));
     
