@@ -15,13 +15,21 @@ export const generateTurns = async (creation: creationForm) => {
     const openMinutesEvening = creation.evening.start.substring(3, 5)
     console.log("inicializar horas");
     
-    let turn: turnInterface = {
-        "cellphoneNumber": "",
-        "document": "",
-        "fullName": "",
-        "hour": "",
-        "turn": "mañana",
-        "reserved": false
+    class turnClass {
+        public cellphoneNumber:string
+        public document:string
+        public fullName:string
+        public hour:string
+        public turn:"mañana"|"tarde"
+        public reserved:boolean
+        constructor(hour:string, turn:"mañana"|"tarde"){
+            this.cellphoneNumber="",
+            this.document= "",
+            this.fullName= "",
+            this.hour= hour,
+            this.turn= turn,
+            this.reserved= false
+        }
     }
     const morningBoxxes = creation.morning.boxxes
     const eveningBoxxes = creation.evening.boxxes
@@ -35,9 +43,8 @@ export const generateTurns = async (creation: creationForm) => {
         
         
         if (creation.daysOfWeek.includes(daysOfWeek[date.getDay()])) {
-            
-            turn.turn = "mañana"
-            turn.hour = `${openHourMorning}:${openMinutesMorning}hs`
+
+            let turn = new turnClass(`${openHourMorning}:${openMinutesMorning}hs`,"mañana")
             openTurns.push(turn)
             console.log(turn);
             
@@ -47,7 +54,7 @@ export const generateTurns = async (creation: creationForm) => {
                 while (minutes < 60 && minutes + 6 - morningBoxxes < 60) {
                     
                     minutes += (6 - morningBoxxes)
-                    turn.hour = `${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`
+                    let turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"mañana")
                     console.log(turn);
                     openTurns.push(turn)
                 }
@@ -56,8 +63,7 @@ export const generateTurns = async (creation: creationForm) => {
             }
 
 
-            turn.turn = "tarde"
-            turn.hour = `${openHourEvening}:${openMinutesEvening}hs`
+            turn = new turnClass(`${openHourEvening}:${openMinutesEvening}hs`,"tarde")
             openTurns.push(turn)
             
             for (let y = openHourEvening; y < closeHourEvening; y++) {
@@ -66,7 +72,7 @@ export const generateTurns = async (creation: creationForm) => {
 
                 while (minutes < 60 || minutes + 6 - eveningBoxxes < 60) {
                     minutes += (6 - eveningBoxxes)
-                    turn.hour = `${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`
+                    turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"mañana")
                     openTurns.push(turn)
                 }
             }
