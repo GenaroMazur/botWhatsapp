@@ -5,7 +5,9 @@ const daysOfWeek: Array<("domingo" | "lunes" | "martes" | "miercoles" | "jueves"
 
 export const generateTurns = async (creation: creationForm) => {
     const daysDiff = (new Date(creation.dateStart).getTime() - new Date(creation.dateEnd).getTime()) / (1000 * 60 * 60 * 24)
-
+    console.log(new Date(creation.dateStart));
+    console.log(new Date(creation.dateEnd));
+    
     const openHourMorning = parseInt(creation.morning.start.substring(0, 2))
     const closeHourMorning = parseInt(creation.morning.end.substring(0, 2))
     const openMinutesMorning = creation.morning.start.substring(3, 5)
@@ -29,6 +31,8 @@ export const generateTurns = async (creation: creationForm) => {
     await NodePersist.setItem("openTurns", [])
     
     console.log("crear archivo persistente");
+    console.log(daysDiff);
+    
     for (let x = 1; x <= daysDiff; x++) {
         console.log("bucle dia num:",x);
         
