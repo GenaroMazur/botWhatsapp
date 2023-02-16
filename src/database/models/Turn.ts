@@ -7,6 +7,7 @@ const turnsSchema = new Schema({
     cellphoneNumber:{type:String, default:""},
     document:{type:String, default:""},
     fullName:{type:String, default:""},
+    turn:{type:String}
 })
 
 const turnoSchema = new Schema({

@@ -33,9 +33,9 @@ export const createTurns = catchAsync(async (req: Request, res: Response, next: 
                 "end": req.body.morning.end
             },
             "evening": {
-                "boxxes": req.body.morning.boxxes,
-                "start": req.body.morning.start,
-                "end": req.body.morning.end
+                "boxxes": req.body.evening.boxxes,
+                "start": req.body.evening.start,
+                "end": req.body.evening.end
             }
         }
 

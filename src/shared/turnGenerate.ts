@@ -46,7 +46,6 @@ export const generateTurns = async (creation: creationForm) => {
 
             let turn = new turnClass(`${openHourMorning}:${openMinutesMorning}hs`,"mañana")
             openTurns.push(turn)
-            console.log(turn);
             
             for (let y = openHourMorning; y < closeHourMorning; y++) {
                 let minutes = y === openHourMorning ? parseInt(turn.hour.substring(3, 5)) : 0
@@ -55,10 +54,8 @@ export const generateTurns = async (creation: creationForm) => {
                     
                     minutes += (6 - morningBoxxes)
                     let turn = new turnClass(`${y}:${minutes < 10 ? `0${minutes}` : minutes}hs`,"mañana")
-                    console.log(turn);
                     openTurns.push(turn)
                 }
-                console.log(openTurns);
                 
             }
 
@@ -67,7 +64,6 @@ export const generateTurns = async (creation: creationForm) => {
             openTurns.push(turn)
             
             for (let y = openHourEvening; y < closeHourEvening; y++) {
-                console.log("bucle hora tarde num:",x);
                 let minutes = y === openHourEvening ? parseInt(turn.hour.substring(3, 5)) : 0
 
                 while (minutes < 60 || minutes + 6 - eveningBoxxes < 60) {
