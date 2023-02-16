@@ -94,14 +94,29 @@ export interface comunMessage {
     }
 }
 
-
-export interface turnInterface{
+export interface conversation {
     fullName:string | null,
     document:string,
-    date:string,
-    hour:string,
-    place:""|"terminal unam"|"shopping posadas"|"obera bicentenario"
+    turns:string,
+    place:string,
+    date:string
+}
+export interface turnDayInterface{
+    fullName:string | null,
+    document:string
+    turns:string,
+    day:string,
+    place:string
 } 
+
+export interface turnInterface{
+    turn:"mañana"|"tarde"
+    hour:string,
+    reserved:boolean,
+    cellphoneNumber:string,
+    document:string,
+    fullName:string
+}
 
 
 export interface sendToWhastapp {
@@ -133,4 +148,21 @@ export interface configInterface {
         }]
     }>,
     "description":string
+}
+
+export interface creationForm {
+    daysOfWeek:Array<("domingo"|"lunes"|"martes"|"miercoles"|"jueves"|"viernes"|"sabado")>,
+    place:string,
+    dateStart:string,
+    dateEnd:string,
+    morning:{
+        boxxes:number,
+        start:string,
+        end:string
+    },
+    evening:{
+        boxxes:number,
+        start:string,
+        end:string
+    }
 }

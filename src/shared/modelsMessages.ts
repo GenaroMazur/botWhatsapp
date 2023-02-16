@@ -1,4 +1,4 @@
-import { configInterface, list, turnInterface } from "../interfaces/interfaces"
+import { configInterface, conversation, list, turnInterface } from "../interfaces/interfaces"
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper"
 import { SERVER } from "../server"
 const server = SERVER.instance
@@ -109,7 +109,7 @@ export const momentModel = (num: number) => {
     }
 }
 
-export const hourModel = (num: number, conversation: turnInterface, turn: "mañana" | "tarde") => {
+export const hourModel = (num: number, conversation: conversation, turn: "mañana" | "tarde") => {
     const config:Array<configInterface> = server.app.locals.config
     let listHours: list = {
         "messaging_product": "whatsapp",
