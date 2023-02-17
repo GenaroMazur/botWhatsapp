@@ -65,7 +65,7 @@ export const placeModels = async (num: number) => {
         "to": num.toString(),
         "interactive": {
             "type": "list",
-            "body": { "text": "Eliga Lugar donde quiere realizar su turno" },
+            "body": { "text": "Elija Lugar donde quiere realizar su turno" },
             "action": {
                 "button": "Sucursales",
                 "sections": [
@@ -98,7 +98,7 @@ export const placeModels = async (num: number) => {
             return acumulador
     },[])
 
-    places.forEach((place:string) => {
+    places.map((place:string) => {
         listPlace.interactive.action.sections[0].rows.push({"id":place,"title":place,"description":"a"})
     });
     console.log(listPlace.interactive.action.sections[0].rows);
