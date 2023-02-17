@@ -49,6 +49,8 @@ export const datesModels = async (num: number, conversation:conversationInterfac
     let dates = await Turn.find({place:conversation.place, date:{
         "$lt":dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]}
     }).select({"turns":0})
+    console.log(dates);
+    
     dates.forEach(turn=>{
         listDate.interactive.action.sections[0].rows.push({"id":turn.date,"title":turn.date,"description":turn.day})
     })
