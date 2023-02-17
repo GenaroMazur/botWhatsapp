@@ -180,6 +180,7 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
     }
     let hoursRange: Array<{ "id": string, "title": string, "description": string }> = []
     let turnos:any = (await Turn.findOne({place:conversation.place, date:conversation.date}).select({place:0, day:0, date:0}))?.turns
+    console.log(turnos)
 
     turnos= turnos?.reduce((initial:Array<string>, turno:any):Array<String>=>{
         if(turno.turn===turn){
@@ -193,7 +194,7 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
         }
         return initial
     },[])
-    
+    console.log(turnos)
     hoursRange = turnos.map((turno:string, index:number)=>{
         if(index+1!==undefined){
             return {"id":`${turno}-${turnos[index+1]}`,"title":`${turno}-${turnos[index+1]}`,"description":turn}
@@ -201,6 +202,8 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
             return
         }
     })
+    console.log(hoursRange);
+    
     listHours.interactive.action.sections[0].rows = hoursRange
 
     return listHours
