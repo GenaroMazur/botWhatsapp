@@ -90,7 +90,7 @@ export const processMessage = async (text: string, num: number, conversation: co
                 const hourRange = userMessage.split("-")
                 if ( hourRange.length===2 && hourRange[0].length>=6 && hourRange[0].length<=7 && hourRange[0].length>=6 && hourRange[1].length<=7&& hourRange[1].length>=6 && hourRange[1].length<=7 && hourRange[1].includes("hs") && hourRange[0].includes("hs")) {
                     
-                    sendToUser(JSON.stringify(turnReady(num, conversation, hourRange)))
+                    sendToUser(JSON.stringify(await turnReady(num, conversation, hourRange)))
                 }
 
             } else {
