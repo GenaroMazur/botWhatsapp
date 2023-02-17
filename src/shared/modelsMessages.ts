@@ -128,9 +128,9 @@ export const momentModel = (num: number) => {
 
 export const turnReady = async (num: number, conversation: conversationInterface, hourRange:Array<string>) => {
 
-    const turns = (await Turn.findOne({"date":conversation.date, "place":conversation.place}).select({turns:{$elemMatch:{hour:"/8/"}}}))?.turns
+    const turns = (await Turn.findOne({"date":conversation.date, "place":conversation.place}).projection({turns:{$elemMatch:{hour:"/8/"}}}))?.turns
     console.log(turns);
-    const selectedTurn = turns?.find((turn)=>{
+    const selectedTurn = turns?.find((turn:any)=>{
         return (!turn.reserved) && turn.hour>hourRange[0]
     })?.hour
     const message = `*Su turno fue asignado el día ${conversation.date} a las ${selectedTurn}.en ${conversation.place} 
