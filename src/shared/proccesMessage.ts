@@ -98,10 +98,17 @@ export const processMessage = async (text: string, num: number, conversation: co
             }
         } else if (conversation.place!=="" && (respuesta?.includes("si-") || respuesta?.includes("no-")) ) {
             if(respuesta==="no"){
+                const mensaje:comunMessage={
+                    "messaging_product":"whatsapp",
+                    "type":"text",
+                    "to":num.toString(),
+                    "text":{"body":"*Para rehacer la consulta, vuelva a iniciar la conversacion*"}
+                }
+                sendToUser(JSON.stringify(mensaje))
                 await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             } else {
                 conversation.hour = respuesta.split("-")[1]
-                console.log(conversation);
+                await Turn.findOneAndUpdate({"place":conversation.place, "date":conversation.date, "turns.hour":conversation.hour},{"turns.$.reserved":true})
                 await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             }
         } else {

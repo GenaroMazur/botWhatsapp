@@ -2,7 +2,6 @@ import { buttons, configInterface, conversationInterface, list, turnInterface } 
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper"
 import { SERVER } from "../server"
 import { Turn } from "../database/models/Turn"
-const server = SERVER.instance
 const welcomeMessage = "*¡Bienvenido a Servicios Urbanos S.A!*\n\nPara sacar turno para reclamos ingresar los siguientes datos.\nSu nombre y apellido completos. \n\nPor favor para otros tipos de consultas comunicarse al 0810-444-7823."
 const dniMessage = "Ahora Debe ingresar su numero de documento *sin puntos ni comas*.\n Por ejemplo: 44736152"
 export const welcomeModel = (num: number) => {
@@ -50,7 +49,6 @@ export const datesModels = async (num: number, conversation: conversationInterfa
             "$gt": dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0],
             "$lt": dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * 10, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
         }}).select({ "turns": 0 })
-console.log(dates);
 
 dates.forEach(turn => {
     listDate.interactive.action.sections[0].rows.push({ "id": turn.date, "title": turn.date, "description": turn.day })
@@ -97,7 +95,6 @@ export const placeModels = async (num: number) => {
     places.map((place: string) => {
         listPlace.interactive.action.sections[0].rows.push({ "id": place, "title": place, "description": "a" })
     });
-    console.log(listPlace.interactive.action.sections[0].rows);
 
     return listPlace
 }
@@ -217,7 +214,6 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
             return {"id":`rango:${turno}-${turnos[index+1]}`,"title":`${turno}-${`${parseInt(turno.split(":")[0])+1}:00hs`}`,"description":turn}
         }
     })
-    console.log(hoursRange);
     
     listHours.interactive.action.sections[0].rows = hoursRange
 
