@@ -85,19 +85,22 @@ export const placeModels = async (num: number) => {
     // })
 
     let places:Array<any> = await Turn.find().select({
-        "turns":0
+        "turns":0,
+        "date":0,
+        "day":0,
+        "_id":0
     })
-    console.log(places);
     
     places = places.reduce((acumulador:Array<any>, turnoActual:any)=>{
-            console.log(acumulador);
             
             if(!acumulador.includes(turnoActual.place)){
                 acumulador.push(turnoActual.place)
             }
             return acumulador
     },[])
+    
     places.forEach((place:string) => {
+        console.log({"id":place,"title":place,"description":""})
         listPlace.interactive.action.sections[0].rows.push({"id":place,"title":place,"description":""})
     });
     console.log(places);
