@@ -24,8 +24,7 @@ export const dniModel = (num: number) => {
     }
 }
 
-export const datesModels = (num: number) => {
-    const config:Array<configInterface> = server.app.locals.config
+export const datesModels = async (num: number, conversation:conversationInterface) => {
     let listDate: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -47,14 +46,10 @@ export const datesModels = (num: number) => {
         }
     }
     
-    for(let x = 1; x<10; x++){
-        const date = dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * x, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
-        const day = (new Date(date).getDay())
-        if(day!==0){
-            const option = { "id":`${x}`, "title": date.slice(5), "description": `dia ${config[0].days[day].day} ${date.slice(8)}` }
-            listDate.interactive.action.sections[0].rows.push(option)
-        }
-    }
+    let dates = await Turn.find({place:conversation.place, date:{"$gta":dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]}}).select({"turns":0})
+    dates.forEach(turn=>{
+        listDate.interactive.action.sections[0].rows.push({"id":turn.date,"title":turn.date,"description":turn.day})
+    })
     return listDate
 }
 
@@ -79,10 +74,6 @@ export const placeModels = async (num: number) => {
             }
         }
     }
-    // config.forEach(place=>{
-    //     listPlace.interactive.action.sections[0].rows.push({"id":place.place, "title":place.place, "description":place.description})
-    // })
-
     let places:Array<any> = await Turn.find().select({
         "turns":0,
         "date":0,
@@ -130,7 +121,7 @@ export const momentModel = (num: number) => {
     }
 }
 
-export const hourModel = (num: number, conversation: conversationInterface, turn: "mañana" | "tarde") => {
+export const hourModel = (num: number, conversation: conversationInterface) => {
     const config:Array<configInterface> = server.app.locals.config
     let listHours: list = {
         "messaging_product": "whatsapp",
@@ -153,26 +144,40 @@ export const hourModel = (num: number, conversation: conversationInterface, turn
         }
     }
     let hours:Array<{ "id":string, "title":string, "description":string }> = []
-    const place = config.find(place=>place.place===conversation.place)
     
-    const numDay = (new Date(`${new Date().getFullYear()}-${conversation.date}`).getDay())
     
-    const turnPlace = place?.days[numDay].turn[0][turn]
+
+    listHours.interactive.action.sections[0].rows=hours
     
-    const openHour = parseInt(turnPlace?.open.split(":")[0]||"0")
-    const closeHour = parseInt(turnPlace?.close.split(":")[0]||"0")
-    
-    for(let x = openHour; x<closeHour; x++){
-        if( x===openHour && turnPlace?.open.split(":")[1]!=="00"){
-            hours.push({"id":`${x}`, "title":`${openHour}:${turnPlace?.open.split(":")[1]}hs`, "description":`turno ${turn}`})
-        } else {
-            for(let y = 0; y <= 4; y=y+2){
-                hours.push({"id":`${x}:${y}0hs`, "title":`${x}:${y}0hs`, "description":`turno ${turn}`})
+    return listHours
+}
+
+export const hourRangeModel = (num: number, conversation: conversationInterface, turn: "mañana" | "tarde") => {
+    const config:Array<configInterface> = server.app.locals.config
+    let listHours: list = {
+        "messaging_product": "whatsapp",
+        "type": "interactive",
+        "to": num.toString(),
+        "interactive": {
+            "type": "list",
+            "body": { "text": "Elija a que hora quiere realizar su turno" },
+            "action": {
+                "button": "Horarios",
+                "sections": [
+                    {
+                        "title": "",
+                        "rows": [
+                            
+                        ]
+                    }
+                ]
             }
         }
     }
+    let hours:Array<{ "id":string, "title":string, "description":string }> = []
+    
+    
 
-    hours.length>=10?hours.length=10:""
     listHours.interactive.action.sections[0].rows=hours
     
     return listHours

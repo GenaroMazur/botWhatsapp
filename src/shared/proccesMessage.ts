@@ -1,8 +1,9 @@
 import { sendToUser } from "../service/sendMessajeToNum"
-import { datesModels, dniModel, hourModel, momentModel, placeModels, welcomeModel } from "./modelsMessages"
+import { datesModels, dniModel, hourModel, momentModel, placeModels, welcomeModel, hourRangeModel } from "./modelsMessages"
 import nodePersist from "node-persist"
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { comunMessage, conversationInterface, turnInterface } from "../interfaces/interfaces"
+import { Turn } from "../database/models/Turn"
 const nums = "0123456789"
 
 export const processMessage = async (text: string, num: number, conversation: conversationInterface, key: string) => {
@@ -47,13 +48,13 @@ export const processMessage = async (text: string, num: number, conversation: co
                 sendToUser(JSON.stringify(errorMessage))
             }
 
-        } else if (conversation.document !== "" && conversation.date === "") {
+        } else if (conversation.place !== "" && conversation.date === "") {
 
             if (userMessage.split("-").length === 2 && userMessage.split("-")[0].length === 2 && userMessage.split("-")[1].length === 2) {
 
                 conversation.date = userMessage
                 await nodePersist.updateItem(key, conversation)
-                sendToUser(JSON.stringify(placeModels(num)))
+                sendToUser(JSON.stringify(momentModel(num)))
             } else {
                 const errorMessage: comunMessage = {
                     "messaging_product": "whatsapp",
@@ -65,14 +66,14 @@ export const processMessage = async (text: string, num: number, conversation: co
             }
 
 
-        } else if (conversation.date !== "" && conversation.place === "") {
+        } else if (conversation.document !== "" && conversation.place === "") {
 
             const place: any = userMessage
-            if (place === "terminal unam" || place === "shopping posadas" || place === "obera bicentenario") {
+            if (await Turn.findOne({place}).select({place:1})!==null) {
 
                 conversation.place = place
                 await nodePersist.updateItem(key, conversation)
-                sendToUser(JSON.stringify(momentModel(num)))
+                sendToUser(JSON.stringify(await datesModels(num, conversation)))
             } else {
                 const errorMessage: comunMessage = {
                     "messaging_product": "whatsapp",
@@ -83,28 +84,34 @@ export const processMessage = async (text: string, num: number, conversation: co
                 sendToUser(JSON.stringify(errorMessage))
             }
 
-        } else if (conversation.place !== "" && conversation.hour === "") {
+        } else if (conversation.date !== "" && conversation.hour === "") {
 
             if (userMessage !== "mañana" && userMessage !== "tarde") {
 
                 const hora = userMessage.split(":")
-                if (hora.length === 2, hora[0].length === 2, hora[1].length === 4) {
-                    conversation.hour = userMessage
-                    await nodePersist.updateItem(key, conversation)
-                    sendToUser(JSON.stringify(welcomeModel(num)))
-                    await nodePersist.clear()
+                if (hora.length === 2 && hora[0].length === 2 && hora[1].length === 4 && hora[1].substring(0,2) === "00") {
+                    sendToUser(JSON.stringify(hourModel(num, conversation)))
                 } else {
-                    const errorMessage: comunMessage = {
-                        "messaging_product": "whatsapp",
-                        "text": { "body": "Hora invalida" },
-                        "type": "text",
-                        "to": num.toString()
+                    if(hora.length === 2 && hora[0].length === 2 && hora[1].length === 4 ){
+
+                        conversation.hour = userMessage
+                        //Aqui termina
+                        await nodePersist.updateItem(key, conversation)
+                        await nodePersist.clear()
+                    } else {
+
+                        const errorMessage: comunMessage = {
+                            "messaging_product": "whatsapp",
+                            "text": { "body": "Hora invalida" },
+                            "type": "text",
+                            "to": num.toString()
+                        }
+                        sendToUser(JSON.stringify(errorMessage))
                     }
-                    sendToUser(JSON.stringify(errorMessage))
                 }
 
             } else {
-                sendToUser(JSON.stringify(hourModel(num, conversation, userMessage)))
+                sendToUser(JSON.stringify(await hourRangeModel(num, conversation, userMessage)))
             }
 
         } else {
