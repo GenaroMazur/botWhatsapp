@@ -24,7 +24,7 @@ export const dniModel = (num: number) => {
     }
 }
 
-export const datesModels = async (num: number, conversation:conversationInterface) => {
+export const datesModels = async (num: number, conversation: conversationInterface) => {
     let listDate: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -38,23 +38,24 @@ export const datesModels = async (num: number, conversation:conversationInterfac
                     {
                         "title": "",
                         "rows": [
-                            
+
                         ]
                     }
                 ]
             }
         }
     }
-    
-    let dates = await Turn.find({place:conversation.place, date:{
-        "$gt":dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]}
-    }).select({"turns":0})
-    console.log(dates);
-    
-    dates.forEach(turn=>{
-        listDate.interactive.action.sections[0].rows.push({"id":turn.date,"title":turn.date,"description":turn.day})
-    })
-    return listDate
+
+    let dates = await Turn.find({place: conversation.place, date: {
+            "$gt": dateZoneString(dateNowTimestamp(), 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0],
+            "$lt": dateZoneString(dateNowTimestamp() + 60 * 60 * 24 * 10, 'zu-ZA', 'America/Argentina/Cordoba').split(" ")[0]
+        }}).select({ "turns": 0 })
+console.log(dates);
+
+dates.forEach(turn => {
+    listDate.interactive.action.sections[0].rows.push({ "id": turn.date, "title": turn.date, "description": turn.day })
+})
+return listDate
 }
 
 export const placeModels = async (num: number) => {
@@ -71,33 +72,33 @@ export const placeModels = async (num: number) => {
                     {
                         "title": "",
                         "rows": [
-                            
+
                         ]
                     }
                 ]
             }
         }
     }
-    let places:Array<any> = await Turn.find().select({
-        "turns":0,
-        "date":0,
-        "day":0,
-        "_id":0
+    let places: Array<any> = await Turn.find().select({
+        "turns": 0,
+        "date": 0,
+        "day": 0,
+        "_id": 0
     })
-    
-    places = places.reduce((acumulador:Array<any>, turnoActual:any)=>{
-            
-            if(!acumulador.includes(turnoActual.place)){
-                acumulador.push(turnoActual.place)
-            }
-            return acumulador
-    },[])
 
-    places.map((place:string) => {
-        listPlace.interactive.action.sections[0].rows.push({"id":place,"title":place,"description":"a"})
+    places = places.reduce((acumulador: Array<any>, turnoActual: any) => {
+
+        if (!acumulador.includes(turnoActual.place)) {
+            acumulador.push(turnoActual.place)
+        }
+        return acumulador
+    }, [])
+
+    places.map((place: string) => {
+        listPlace.interactive.action.sections[0].rows.push({ "id": place, "title": place, "description": "a" })
     });
     console.log(listPlace.interactive.action.sections[0].rows);
-    
+
     return listPlace
 }
 
@@ -126,7 +127,7 @@ export const momentModel = (num: number) => {
 }
 
 export const hourModel = (num: number, conversation: conversationInterface) => {
-    const config:Array<configInterface> = server.app.locals.config
+    const config: Array<configInterface> = server.app.locals.config
     let listHours: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -140,24 +141,24 @@ export const hourModel = (num: number, conversation: conversationInterface) => {
                     {
                         "title": "",
                         "rows": [
-                            
+
                         ]
                     }
                 ]
             }
         }
     }
-    let hours:Array<{ "id":string, "title":string, "description":string }> = []
-    
-    
+    let hours: Array<{ "id": string, "title": string, "description": string }> = []
 
-    listHours.interactive.action.sections[0].rows=hours
-    
+
+
+    listHours.interactive.action.sections[0].rows = hours
+
     return listHours
 }
 
 export const hourRangeModel = (num: number, conversation: conversationInterface, turn: "mañana" | "tarde") => {
-    const config:Array<configInterface> = server.app.locals.config
+    const config: Array<configInterface> = server.app.locals.config
     let listHours: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -171,18 +172,18 @@ export const hourRangeModel = (num: number, conversation: conversationInterface,
                     {
                         "title": "",
                         "rows": [
-                            
+
                         ]
                     }
                 ]
             }
         }
     }
-    let hours:Array<{ "id":string, "title":string, "description":string }> = []
-    
-    
+    let hours: Array<{ "id": string, "title": string, "description": string }> = []
 
-    listHours.interactive.action.sections[0].rows=hours
-    
+
+
+    listHours.interactive.action.sections[0].rows = hours
+
     return listHours
 }
