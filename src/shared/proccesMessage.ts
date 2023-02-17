@@ -97,7 +97,7 @@ export const processMessage = async (text: string, num: number, conversation: co
                 sendToUser(JSON.stringify(await hourRangeModel(num, conversation, userMessage)))
             }
         } else if (conversation.place !== "" && (respuesta?.includes("si-") || respuesta?.includes("no-"))) {
-            if (respuesta === "no") {
+            if (respuesta === "no-") {
                 const mensaje: comunMessage = {
                     "messaging_product": "whatsapp",
                     "type": "text",
