@@ -59,7 +59,6 @@ export const datesModels = (num: number) => {
 }
 
 export const placeModels = async (num: number) => {
-    const config:Array<configInterface> = server.app.locals.config
     let listPlace: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
@@ -100,10 +99,9 @@ export const placeModels = async (num: number) => {
     },[])
 
     places.forEach((place:string) => {
-        console.log({"id":place,"title":place,"description":""})
-        listPlace.interactive.action.sections[0].rows.push({"id":place,"title":place,"description":""})
+        listPlace.interactive.action.sections[0].rows.push({"id":place,"title":place,"description":"a"})
     });
-    console.log(listPlace.interactive.action.sections[0]);
+    console.log(listPlace.interactive.action.sections[0].rows);
     
     return listPlace
 }
