@@ -36,7 +36,7 @@ export const processMessage = async (text: string, num: number, conversation: co
             if ((userMessage.length == 7 || userMessage.length == 8) && userMessage.split("").every(value => nums.includes(value))) {
                 conversation.document = userMessage
                 await nodePersist.updateItem(key, conversation)
-                sendToUser(JSON.stringify(placeModels(num)))
+                sendToUser(JSON.stringify(await placeModels(num)))
             } else {
                 const errorMessage: comunMessage = {
                     "messaging_product": "whatsapp",
