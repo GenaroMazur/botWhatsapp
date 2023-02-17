@@ -111,7 +111,7 @@ export const processMessage = async (text: string, num: number, conversation: co
                 }
 
             } else {
-                sendToUser(JSON.stringify(hourRangeModel(num, conversation, userMessage)))
+                sendToUser(JSON.stringify(await hourRangeModel(num, conversation, userMessage)))
             }
 
         } else {
