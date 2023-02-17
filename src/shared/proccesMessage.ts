@@ -112,7 +112,7 @@ export const processMessage = async (text: string, num: number, conversation: co
                     "turns.$.reserved":true,
                     "turns.$.fullName":conversation.fullName,
                     "turns.$.document":conversation.document,
-                    "turns.$.cellphoneNumber":num
+                    "turns.$.cellphoneNumber":key
                 }
                 await Turn.findOneAndUpdate({ "place": conversation.place, "date": conversation.date, "turns.hour": conversation.hour }, turnoActualizado)
                 await nodePersist.update(key, { "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
