@@ -6,7 +6,7 @@ import { comunMessage, conversationInterface, turnInterface } from "../interface
 import { Turn } from "../database/models/Turn"
 const nums = "0123456789"
 
-export const processMessage = async (text: string, num: number, conversation: conversationInterface, key: string, respuesta?:string) => {
+export const processMessage = async (text: string, num: number, conversation: conversationInterface, key: string, respuesta?: string) => {
     try {
 
         const userMessage: string = text.toLowerCase()
@@ -84,32 +84,32 @@ export const processMessage = async (text: string, num: number, conversation: co
                 sendToUser(JSON.stringify(errorMessage))
             }
 
-        } else if (conversation.date !== "" && conversation.hour === "" && (userMessage==="mañana"|| userMessage==="tarde" || respuesta?.includes("rango:"))) {
+        } else if (conversation.date !== "" && conversation.hour === "" && (userMessage === "mañana" || userMessage === "tarde" || respuesta?.includes("rango:"))) {
 
             if (userMessage !== "mañana" && userMessage !== "tarde") {
                 const hourRange = userMessage.split("-")
-                if ( hourRange.length===2 && hourRange[0].length>=6 && hourRange[0].length<=7 && hourRange[0].length>=6 && hourRange[1].length<=7&& hourRange[1].length>=6 && hourRange[1].length<=7 && hourRange[1].includes("hs") && hourRange[0].includes("hs")) {
-                    
+                if (hourRange.length === 2 && hourRange[0].length >= 6 && hourRange[0].length <= 7 && hourRange[0].length >= 6 && hourRange[1].length <= 7 && hourRange[1].length >= 6 && hourRange[1].length <= 7 && hourRange[1].includes("hs") && hourRange[0].includes("hs")) {
+
                     sendToUser(JSON.stringify(await turnReady(num, conversation, hourRange)))
                 }
 
             } else {
                 sendToUser(JSON.stringify(await hourRangeModel(num, conversation, userMessage)))
             }
-        } else if (conversation.place!=="" && (respuesta?.includes("si-") || respuesta?.includes("no-")) ) {
-            if(respuesta==="no"){
-                const mensaje:comunMessage={
-                    "messaging_product":"whatsapp",
-                    "type":"text",
-                    "to":num.toString(),
-                    "text":{"body":"*Para rehacer la consulta, vuelva a iniciar la conversacion*"}
+        } else if (conversation.place !== "" && (respuesta?.includes("si-") || respuesta?.includes("no-"))) {
+            if (respuesta === "no") {
+                const mensaje: comunMessage = {
+                    "messaging_product": "whatsapp",
+                    "type": "text",
+                    "to": num.toString(),
+                    "text": { "body": "*Para rehacer la consulta, vuelva a iniciar la conversacion*" }
                 }
                 sendToUser(JSON.stringify(mensaje))
-                await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
+                await nodePersist.update(key, { "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             } else {
                 conversation.hour = respuesta.split("-")[1]
-                await Turn.findOneAndUpdate({"place":conversation.place, "date":conversation.date, "turns.hour":conversation.hour},{"turns.$.reserved":true})
-                await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
+                await Turn.findOneAndUpdate({ "place": conversation.place, "date": conversation.date, "turns.hour": conversation.hour }, { "turns.$.reserved": true })
+                await nodePersist.update(key, { "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             }
         } else {
 
