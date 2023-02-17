@@ -50,7 +50,7 @@ export const processMessage = async (text: string, num: number, conversation: co
 
         } else if (conversation.place !== "" && conversation.date === "") {
 
-            if (userMessage.split("-").length === 2 && userMessage.split("-")[0].length === 2 && userMessage.split("-")[1].length === 2) {
+            if (userMessage.split("-").length === 3 && userMessage.split("-")[0].length === 4 && userMessage.split("-")[1].length === 2 && userMessage.split("-")[2].length === 2) {
 
                 conversation.date = userMessage
                 await nodePersist.updateItem(key, conversation)
