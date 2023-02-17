@@ -108,7 +108,12 @@ export const processMessage = async (text: string, num: number, conversation: co
                 await nodePersist.update(key, { "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             } else {
                 conversation.hour = respuesta.split("-")[1]
-                await Turn.findOneAndUpdate({ "place": conversation.place, "date": conversation.date, "turns.hour": conversation.hour }, { "turns.$.reserved": true })
+                const turnoActualizado = {
+                    "turns.$.reserved":true,
+                    "turns.$.fullName":conversation.fullName,
+                    "turns.$.document":conversation.document
+                }
+                await Turn.findOneAndUpdate({ "place": conversation.place, "date": conversation.date, "turns.hour": conversation.hour }, turnoActualizado)
                 await nodePersist.update(key, { "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             }
         } else {
