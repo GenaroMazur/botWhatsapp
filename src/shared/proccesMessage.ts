@@ -98,10 +98,11 @@ export const processMessage = async (text: string, num: number, conversation: co
             }
         } else if (conversation.place!=="" && (respuesta?.includes("si-") || respuesta?.includes("no-")) ) {
             if(respuesta==="no"){
-                await nodePersist.update(key,undefined)
+                await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             } else {
                 conversation.hour = respuesta
                 console.log(conversation);
+                await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             }
         } else {
 
