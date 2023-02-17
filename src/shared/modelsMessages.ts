@@ -98,12 +98,12 @@ export const placeModels = async (num: number) => {
             }
             return acumulador
     },[])
-    
+
     places.forEach((place:string) => {
         console.log({"id":place,"title":place,"description":""})
         listPlace.interactive.action.sections[0].rows.push({"id":place,"title":place,"description":""})
     });
-    console.log(places);
+    console.log(listPlace.interactive.action.sections[0]);
     
     return listPlace
 }
