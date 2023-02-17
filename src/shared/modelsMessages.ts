@@ -129,7 +129,7 @@ export const momentModel = (num: number) => {
 export const turnReady = async (num: number, conversation: conversationInterface, hourRange:Array<string>) => {
 
     const turns:any = (await Turn.find({"date":conversation.date, "place":conversation.place}).select({turns:{$elemMatch:{hour:new RegExp(`^${hourRange[0].split(":")[0]}`,"i")}}}))[0]?.turns
-    const message = `*Su turno fue asignado el día ${conversation.date} a las ${turns[0].hour}.en ${conversation.place} 
+    const message = `*Su turno fue asignado el día *${conversation.date}* a las *${turns[0].hour}*.en *${conversation.place}* 
 
     ⚠️Recuerde que para realizar el trámite debe contar con la siguiente documentación obligatoria:
     1) Constancia de Inscripción BEEG 2022. (Firmado y Sellado por la institución escolar y policial). Obtenida del sitio oficial https://beg.misiones.gov.ar/#/home
@@ -156,14 +156,14 @@ export const turnReady = async (num: number, conversation: conversationInterface
                     {
                         "type":"reply",
                         "reply":{
-                            "id":"si",
+                            "id":`si-${turns[0].hour}`,
                             "title":"si"
                         }
                     },
                     {
                         "type":"reply",
                         "reply":{
-                            "id":"no",
+                            "id":"no-",
                             "title":"no"
                         }
                     }
@@ -212,9 +212,9 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
     },[])
     hoursRange = turnos.map((turno:string, index:number)=>{
         if(turnos[index+1]!==undefined){
-            return {"id":`${turno}-${turnos[index+1]}`,"title":`${turno}-${turnos[index+1]}`,"description":turn}
+            return {"id":`rango:${turno}-${turnos[index+1]}`,"title":`${turno}-${turnos[index+1]}`,"description":turn}
         } else {
-            return {"id":`${turno}-${turnos[index+1]}`,"title":`${turno}-${`${parseInt(turno.split(":")[0])+1}:00hs`}`,"description":turn}
+            return {"id":`rango:${turno}-${turnos[index+1]}`,"title":`${turno}-${`${parseInt(turno.split(":")[0])+1}:00hs`}`,"description":turn}
         }
     })
     console.log(hoursRange);
@@ -223,3 +223,4 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
 
     return listHours
 }
+

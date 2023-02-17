@@ -6,7 +6,7 @@ import { comunMessage, conversationInterface, turnInterface } from "../interface
 import { Turn } from "../database/models/Turn"
 const nums = "0123456789"
 
-export const processMessage = async (text: string, num: number, conversation: conversationInterface, key: string) => {
+export const processMessage = async (text: string, num: number, conversation: conversationInterface, key: string, respuesta?:string) => {
     try {
 
         const userMessage: string = text.toLowerCase()
@@ -84,7 +84,7 @@ export const processMessage = async (text: string, num: number, conversation: co
                 sendToUser(JSON.stringify(errorMessage))
             }
 
-        } else if (conversation.date !== "" && conversation.hour === "") {
+        } else if (conversation.date !== "" && conversation.hour === "" && (userMessage==="mañana"|| userMessage==="tarde" || respuesta?.includes("rango:"))) {
 
             if (userMessage !== "mañana" && userMessage !== "tarde") {
                 const hourRange = userMessage.split("-")
@@ -96,7 +96,12 @@ export const processMessage = async (text: string, num: number, conversation: co
             } else {
                 sendToUser(JSON.stringify(await hourRangeModel(num, conversation, userMessage)))
             }
+        } else if (conversation.place!=="" && (respuesta?.includes("si-") || respuesta?.includes("no-")) ) {
+            if(respuesta==="no"){
 
+            } else {
+                conversation.hour = respuesta
+            }
         } else {
 
             const errorMessage: comunMessage = {
