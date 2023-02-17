@@ -14,6 +14,6 @@ export const sendToUser = async (message:string)=>{
         "body":message
     }
     fetch("https://graph.facebook.com/v16.0/109330648741829/messages",options).then(r=>{
-        console.log(r)
+        console.log(r.body)
     })
 }
