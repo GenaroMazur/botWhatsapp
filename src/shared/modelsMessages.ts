@@ -157,15 +157,14 @@ export const hourModel = (num: number, conversation: conversationInterface) => {
     return listHours
 }
 
-export const hourRangeModel = (num: number, conversation: conversationInterface, turn: "mañana" | "tarde") => {
-    const config: Array<configInterface> = server.app.locals.config
+export const hourRangeModel = async (num: number, conversation: conversationInterface, turn: "mañana" | "tarde") => {
     let listHours: list = {
         "messaging_product": "whatsapp",
         "type": "interactive",
         "to": num.toString(),
         "interactive": {
             "type": "list",
-            "body": { "text": "Elija a que hora quiere realizar su turno" },
+            "body": { "text": "Elija a que rango horario quiere realizar su turno" },
             "action": {
                 "button": "Horarios",
                 "sections": [
@@ -179,11 +178,30 @@ export const hourRangeModel = (num: number, conversation: conversationInterface,
             }
         }
     }
-    let hours: Array<{ "id": string, "title": string, "description": string }> = []
+    let hoursRange: Array<{ "id": string, "title": string, "description": string }> = []
+    let turnos:any = (await Turn.findOne({place:conversation.place, date:conversation.date}).select({place:0, day:0, date:0}))?.turns
 
-
-
-    listHours.interactive.action.sections[0].rows = hours
+    turnos= turnos?.reduce((initial:Array<string>, turno:any):Array<String>=>{
+        if(turno.turn===turn){
+            if(initial[initial.length-1] !== undefined){
+                if(initial[initial.length-1] !== `${turno.hour.split(":")[0]}:00hs`){
+                    initial.push(`${turno.hour.split(":")[0]}:00hs`)
+                }
+            } else {
+                initial.push(`${turno.hour.split(":")[0]}:00hs`)
+            }
+        }
+        return initial
+    },[])
+    
+    hoursRange = turnos.map((turno:string, index:number)=>{
+        if(index+1!==undefined){
+            return {"id":``,"title":`${turno}-${turnos[index+1]}`,"description":turn}
+        } else {
+            return
+        }
+    })
+    listHours.interactive.action.sections[0].rows = hoursRange
 
     return listHours
 }
