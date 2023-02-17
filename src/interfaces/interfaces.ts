@@ -27,7 +27,7 @@ export interface buttons {
         "body": { "text": string },
         "footer"?: { "text": string }
         "action": {
-            "buttons": [button]
+            "buttons": Array<button>
         }
     }
 }

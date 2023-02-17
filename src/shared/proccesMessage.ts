@@ -1,5 +1,5 @@
 import { sendToUser } from "../service/sendMessajeToNum"
-import { datesModels, dniModel, hourModel, momentModel, placeModels, welcomeModel, hourRangeModel } from "./modelsMessages"
+import { datesModels, dniModel, turnReady, momentModel, placeModels, welcomeModel, hourRangeModel } from "./modelsMessages"
 import nodePersist from "node-persist"
 import { whastappObjectResponse } from "../interfaces/whatsappResponseInterface"
 import { comunMessage, conversationInterface, turnInterface } from "../interfaces/interfaces"
@@ -69,7 +69,7 @@ export const processMessage = async (text: string, num: number, conversation: co
         } else if (conversation.document !== "" && conversation.place === "") {
 
             const place: any = userMessage
-            if (await Turn.findOne({place}).select({place:1})!==null) {
+            if (await Turn.findOne({ place }).select({ place: 1 }) !== null) {
 
                 conversation.place = place
                 await nodePersist.updateItem(key, conversation)
@@ -87,27 +87,10 @@ export const processMessage = async (text: string, num: number, conversation: co
         } else if (conversation.date !== "" && conversation.hour === "") {
 
             if (userMessage !== "mañana" && userMessage !== "tarde") {
-
-                const hora = userMessage.split(":")
-                if (hora.length === 2 && hora[0].length === 2 && hora[1].length === 4 && hora[1].substring(0,2) === "00") {
-                    sendToUser(JSON.stringify(hourModel(num, conversation)))
-                } else {
-                    if(hora.length === 2 && hora[0].length === 2 && hora[1].length === 4 ){
-
-                        conversation.hour = userMessage
-                        //Aqui termina
-                        await nodePersist.updateItem(key, conversation)
-                        await nodePersist.clear()
-                    } else {
-
-                        const errorMessage: comunMessage = {
-                            "messaging_product": "whatsapp",
-                            "text": { "body": "Hora invalida" },
-                            "type": "text",
-                            "to": num.toString()
-                        }
-                        sendToUser(JSON.stringify(errorMessage))
-                    }
+                const hourRange = userMessage.split("-")
+                if ( hourRange.length===2 && hourRange[0].length>=6 && hourRange[0].length<=7 && hourRange[0].length>=6 && hourRange[1].length<=7&& hourRange[1].length>=6 && hourRange[1].length<=7 && hourRange[1].includes("hs") && hourRange[0].includes("hs")) {
+                    
+                    sendToUser(JSON.stringify(turnReady(num, conversation, hourRange)))
                 }
 
             } else {
@@ -130,7 +113,7 @@ export const processMessage = async (text: string, num: number, conversation: co
     }
 }
 
-export const persistConversation = async (message: whastappObjectResponse):Promise<conversationInterface> => {
+export const persistConversation = async (message: whastappObjectResponse): Promise<conversationInterface> => {
     const cellphoneNum = message.entry[0].changes[0].value.messages[0].from
     const conversation: conversationInterface = await nodePersist.getItem(cellphoneNum)
     const turn: conversationInterface = { "fullName": null, "document": "", "date": "", "hour": "", "place": "" }

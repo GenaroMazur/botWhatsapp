@@ -1,4 +1,4 @@
-import { configInterface, conversationInterface, list, turnInterface } from "../interfaces/interfaces"
+import { buttons, configInterface, conversationInterface, list, turnInterface } from "../interfaces/interfaces"
 import { dateZoneString, dateNowTimestamp } from "../helpers/helper"
 import { SERVER } from "../server"
 import { Turn } from "../database/models/Turn"
@@ -126,35 +126,55 @@ export const momentModel = (num: number) => {
     }
 }
 
-export const hourModel = (num: number, conversation: conversationInterface) => {
-    const config: Array<configInterface> = server.app.locals.config
-    let listHours: list = {
+export const turnReady = async (num: number, conversation: conversationInterface, hourRange:Array<string>) => {
+
+    const turns = (await Turn.findOne({"date":conversation.date, "place":conversation.place}).select({turns:1}))?.turns
+    const selectedTurn = turns?.find((turn)=>{
+        return (!turn.reserved) && turn.hour>hourRange[0]
+    })?.hour
+    const message = `*Su turno fue asignado el día ${conversation.date} a las ${selectedTurn}.en ${conversation.place} 
+
+    ⚠️Recuerde que para realizar el trámite debe contar con la siguiente documentación obligatoria:
+    1) Constancia de Inscripción BEEG 2022. (Firmado y Sellado por la institución escolar y policial). Obtenida del sitio oficial https://beg.misiones.gov.ar/#/home
+    2) DNI original y copia.
+    3) Tarjeta sube.
+    
+    Para mejorar la experiencia del trámite, nos permitimos hacerle algunas recomendaciones:
+    •Sea puntual en el cumplimiento del horario del turno agendado. (NO PRESENTARSE ANTES DE SU TURNO).
+    •Tener la documentación a mano. 
+    •Asistir SOLO, en la medida de sus posibilidades o con el Beneficiario en caso de no tener tarjeta Sube. 
+    
+        
+    ¡Muchas gracias y que tenga un excelente día!`
+
+    let turnReady: buttons = {
         "messaging_product": "whatsapp",
         "type": "interactive",
         "to": num.toString(),
         "interactive": {
-            "type": "list",
-            "body": { "text": "Elija a que hora quiere realizar su turno" },
+            "type": "button",
+            "body": { "text": message },
             "action": {
-                "button": "Horarios",
-                "sections": [
+                "buttons":[
                     {
-                        "title": "",
-                        "rows": [
-
-                        ]
+                        "type":"reply",
+                        "reply":{
+                            "id":"si",
+                            "title":"si"
+                        }
+                    },
+                    {
+                        "type":"reply",
+                        "reply":{
+                            "id":"no",
+                            "title":"no"
+                        }
                     }
                 ]
             }
         }
     }
-    let hours: Array<{ "id": string, "title": string, "description": string }> = []
-
-
-
-    listHours.interactive.action.sections[0].rows = hours
-
-    return listHours
+    return turnReady
 }
 
 export const hourRangeModel = async (num: number, conversation: conversationInterface, turn: "mañana" | "tarde") => {
@@ -197,7 +217,7 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
         if(turnos[index+1]!==undefined){
             return {"id":`${turno}-${turnos[index+1]}`,"title":`${turno}-${turnos[index+1]}`,"description":turn}
         } else {
-            return {"id":`${turno}-${turnos[index+1]}`,"title":`${turno}-${`${parseInt(turno.split(":")[0])+1}:00`}`,"description":turn}
+            return {"id":`${turno}-${turnos[index+1]}`,"title":`${turno}-${`${parseInt(turno.split(":")[0])+1}:00hs`}`,"description":turn}
         }
     })
     console.log(hoursRange);
