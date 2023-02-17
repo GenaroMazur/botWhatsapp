@@ -100,7 +100,7 @@ export const processMessage = async (text: string, num: number, conversation: co
             if(respuesta==="no"){
                 await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             } else {
-                conversation.hour = respuesta
+                conversation.hour = respuesta.split("-")[1]
                 console.log(conversation);
                 await nodePersist.update(key,{ "fullName": null, "document": "", "date": "", "hour": "", "place": "" })
             }
