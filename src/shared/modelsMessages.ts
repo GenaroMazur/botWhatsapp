@@ -128,7 +128,8 @@ export const momentModel = (num: number) => {
 
 export const turnReady = async (num: number, conversation: conversationInterface, hourRange:Array<string>) => {
 
-    const turns = (await Turn.findOne({"date":conversation.date, "place":conversation.place}).select({turns:1}))?.turns
+    const turns = (await Turn.findOne({"date":conversation.date, "place":conversation.place}).select({turns:{$elemMatch:{hour:"/8/"}}}))?.turns
+    console.log(turns);
     const selectedTurn = turns?.find((turn)=>{
         return (!turn.reserved) && turn.hour>hourRange[0]
     })?.hour
