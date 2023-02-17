@@ -196,7 +196,7 @@ export const hourRangeModel = async (num: number, conversation: conversationInte
     
     hoursRange = turnos.map((turno:string, index:number)=>{
         if(index+1!==undefined){
-            return {"id":``,"title":`${turno}-${turnos[index+1]}`,"description":turn}
+            return {"id":`${turno}-${turnos[index+1]}`,"title":`${turno}-${turnos[index+1]}`,"description":turn}
         } else {
             return
         }
