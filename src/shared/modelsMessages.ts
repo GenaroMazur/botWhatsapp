@@ -93,7 +93,7 @@ export const placeModels = async (num: number) => {
     }, [])
 
     places.map((place: string) => {
-        listPlace.interactive.action.sections[0].rows.push({ "id": place, "title": place, "description": "a" })
+        listPlace.interactive.action.sections[0].rows.push({ "id": place, "title": place, "description": "" })
     });
 
     return listPlace
