@@ -129,7 +129,7 @@ export const turnReady = async (num: number, conversation: conversationInterface
     const message = `*Su turno fue asignado el día *${conversation.date}* a las *${turns[0].hour}*.en *${conversation.place}* 
 
     ⚠️Recuerde que para realizar el trámite debe contar con la siguiente documentación obligatoria:
-    1) Constancia de Inscripción BEEG 2022. (Firmado y Sellado por la institución escolar y policial). Obtenida del sitio oficial https://beg.misiones.gov.ar/#/home
+    1) Constancia de Inscripción BEEG vigente. (Firmado y Sellado por la institución escolar y policial). Obtenida del sitio oficial https://beg.misiones.gov.ar/#/home
     2) DNI original y copia.
     3) Tarjeta sube.
     

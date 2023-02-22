@@ -23,7 +23,7 @@ export const turnsList = catchAsync(async (req: Request, res: Response, next: Ne
 export const createTurns = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const creation: creationForm = {
-            "place":"shopping posadas",//hay que sacar del token
+            "place": req.body.place,
             "daysOfWeek": req.body.daysOfWeek,
             "dateStart": req.body.dateStart,
             "dateEnd": req.body.dateEnd,
@@ -41,7 +41,7 @@ export const createTurns = catchAsync(async (req: Request, res: Response, next: 
 
 
         generateTurns(creation)
-        endpointResponse({res,"message":"¡ Turnos generados !", code:201})
+        endpointResponse({ res, "message": "¡ Turnos generados !", code: 201 })
     } catch (error: any) {
         console.log(error);
         return endpointResponse({ res, code: 500, message: "OPSS" })
@@ -51,8 +51,8 @@ export const createTurns = catchAsync(async (req: Request, res: Response, next: 
 export const turnDetail = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const turnId = req.params.turnId
-        const turn = (await Turn.find({"turns.turnId":turnId},{"turns.$":1}))[0]?.turns[0]
-        endpointResponse({res, code:turn?200:204, message:`¡ Turno !`,body:turn})
+        const turn = (await Turn.find({ "turns.turnId": turnId }, { "turns.$": 1 }))[0]?.turns[0]
+        endpointResponse({ res, code: turn ? 200 : 204, message: `¡ Turno !`, body: turn })
     } catch (error: any) {
         console.log(error);
         return endpointResponse({ res, code: 500, message: "OPSS" })
@@ -61,7 +61,16 @@ export const turnDetail = catchAsync(async (req: Request, res: Response, next: N
 
 export const updateTurn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
-
+        const turnId = req.params.turnId
+        const modifiedTurn = {
+            "turns.$.reserved":req.body.reserved,
+            "turns.$.cellphoneNumber":req.body.cellphoneNumber,
+            "turns.$.document":req.body.document,
+            "turns.$.fullName":req.body.fullName,
+            "turns.$.assist":req.body.assist
+        }
+        await Turn.findOneAndUpdate({"turns.turnId":turnId},modifiedTurn)
+        endpointResponse({res, code:201, message:"¡ Turno modificado !"})
     } catch (error: any) {
         console.log(error);
         return endpointResponse({ res, code: 500, message: "OPSS" })
@@ -71,8 +80,8 @@ export const updateTurn = catchAsync(async (req: Request, res: Response, next: N
 export const deleteTurn = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     try {
         const turnId = req.params.turnId
-        const turn = await Turn.findOneAndUpdate({"turns.turnId":turnId},{"$pull":{"turns":{"turnId":turnId}}})
-        endpointResponse({res, code:turn!==null?200:204, message:`¡ Turno !`,body:turn})
+        const turn = await Turn.findOneAndUpdate({ "turns.turnId": turnId }, { "$pull": { "turns": { "turnId": turnId } } })
+        endpointResponse({ res, code: turn !== null ? 200 : 204, message: `¡ Turno !`, body: turn })
     } catch (error: any) {
         console.log(error);
         return endpointResponse({ res, code: 500, message: "OPSS" })
